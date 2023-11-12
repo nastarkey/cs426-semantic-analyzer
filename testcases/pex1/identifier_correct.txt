@@ -1,0 +1,7 @@
+x
+_thisVar
+variableX
+int
+double
+var
+float

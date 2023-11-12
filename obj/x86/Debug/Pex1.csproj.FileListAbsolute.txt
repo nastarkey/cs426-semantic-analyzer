@@ -1,0 +1,14 @@
+C:\Users\C24Nathaniel.Starkey\OneDrive - afacademy.af.edu\Documents\school\CS 426\PEX Starter Pack\obj\x86\Debug\Pex1.csproj.AssemblyReference.cache
+C:\Users\C24Nathaniel.Starkey\OneDrive - afacademy.af.edu\Documents\school\CS 426\PEX Starter Pack\obj\x86\Debug\Pex1.csproj.CoreCompileInputs.cache
+C:\Users\C24Nathaniel.Starkey\OneDrive - afacademy.af.edu\Documents\school\CS 426\PEX Starter Pack\bin\Debug\ConsoleApplication.exe.config
+C:\Users\C24Nathaniel.Starkey\OneDrive - afacademy.af.edu\Documents\school\CS 426\PEX Starter Pack\bin\Debug\ConsoleApplication.exe
+C:\Users\C24Nathaniel.Starkey\OneDrive - afacademy.af.edu\Documents\school\CS 426\PEX Starter Pack\bin\Debug\ConsoleApplication.pdb
+C:\Users\C24Nathaniel.Starkey\OneDrive - afacademy.af.edu\Documents\school\CS 426\PEX Starter Pack\obj\x86\Debug\ConsoleApplication.exe
+C:\Users\C24Nathaniel.Starkey\OneDrive - afacademy.af.edu\Documents\school\CS 426\PEX Starter Pack\obj\x86\Debug\ConsoleApplication.pdb
+C:\Users\C24Nathaniel.Starkey\OneDrive - afacademy.af.edu\Documents\school\CS 426\Starkey PEX\obj\x86\Debug\Pex1.csproj.AssemblyReference.cache
+C:\Users\C24Nathaniel.Starkey\OneDrive - afacademy.af.edu\Documents\school\CS 426\Starkey PEX\obj\x86\Debug\Pex1.csproj.CoreCompileInputs.cache
+C:\Users\C24Nathaniel.Starkey\OneDrive - afacademy.af.edu\Documents\school\CS 426\Starkey PEX\obj\x86\Debug\ConsoleApplication.exe
+C:\Users\C24Nathaniel.Starkey\OneDrive - afacademy.af.edu\Documents\school\CS 426\Starkey PEX\obj\x86\Debug\ConsoleApplication.pdb
+C:\Users\C24Nathaniel.Starkey\OneDrive - afacademy.af.edu\Documents\school\CS 426\Starkey PEX\bin\Debug\ConsoleApplication.exe.config
+C:\Users\C24Nathaniel.Starkey\OneDrive - afacademy.af.edu\Documents\school\CS 426\Starkey PEX\bin\Debug\ConsoleApplication.exe
+C:\Users\C24Nathaniel.Starkey\OneDrive - afacademy.af.edu\Documents\school\CS 426\Starkey PEX\bin\Debug\ConsoleApplication.pdb

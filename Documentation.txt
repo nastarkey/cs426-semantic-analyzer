@@ -1,0 +1,16 @@
+PEX 1 DOCUMENTATION:
+C/ Kayleb Klapp and I discussed some ideas of how to implement string and identifier as well as some edge cases with the doubles. He also yelled at me multiple times to watch the pex video
+in order to get answers to superfulous questions.
+
+
+PEX 2 DOCUMENTATION:
+None
+
+
+PEX 3 DOCUMENTATION:
+
+
+
+PEX 4 DOCUMENTATION:
+
+

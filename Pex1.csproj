@@ -1,0 +1,127 @@
+﻿<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{C5E9B153-5639-4445-81A9-410625C3E14A}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <AssemblyName>ConsoleApplication</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>Pex1</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="analysis.cs" />
+    <Compile Include="Definition.cs" />
+    <Compile Include="lexer.cs" />
+    <Compile Include="nodes.cs" />
+    <Compile Include="parser.cs" />
+    <Compile Include="prods.cs" />
+    <Compile Include="main.cs" />
+    <Compile Include="SemanticAnalyzer.cs" />
+    <Compile Include="tokens.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Documentation.txt" />
+    <Content Include="doxygen.css" />
+    <Content Include="PEX_LANGUAGE.txt" />
+    <Content Include="testcases\pex1\comment_incorrect2.txt" />
+    <Content Include="testcases\pex1\comment_incorrect1.txt" />
+    <Content Include="testcases\pex1\comment_correct.txt" />
+    <Content Include="testcases\pex1\double_incorrect1.txt" />
+    <Content Include="testcases\pex1\double_incorrect2.txt" />
+    <Content Include="testcases\pex1\identifier_incorrect1.txt" />
+    <Content Include="testcases\pex1\identifier_incorrect2.txt" />
+    <Content Include="testcases\pex1\identifier_correct.txt" />
+    <Content Include="testcases\pex1\integer_incorrect1.txt" />
+    <Content Include="testcases\pex1\integer_incorrect2.txt" />
+    <Content Include="testcases\pex1\integer_correct.txt" />
+    <Content Include="testcases\pex1\double_correct.txt" />
+    <Content Include="testcases\pex1\string_incorrect1.txt" />
+    <Content Include="testcases\pex1\string_incorrect2.txt" />
+    <Content Include="testcases\pex1\symbols_incorrect1.txt" />
+    <Content Include="testcases\pex1\symbols_incorrect2.txt" />
+    <Content Include="testcases\pex1\symbols_correct.txt" />
+    <Content Include="testcases\pex1\string_correct.txt" />
+    <Content Include="testcases\pex2\test.txt" />
+    <Content Include="testcases\pex2\declaration_correct.txt" />
+    <Content Include="testcases\pex2\declaration_incorrect.txt" />
+    <Content Include="testcases\pex2\if_correct.txt" />
+    <Content Include="testcases\pex2\if_incorrect.txt" />
+    <Content Include="testcases\pex2\assign_correct.txt" />
+    <Content Include="testcases\pex2\assign_incorrect.txt" />
+    <Content Include="testcases\pex2\boolean_correct.txt" />
+    <Content Include="testcases\pex2\boolean_incorrect.txt" />
+    <Content Include="testcases\pex2\arithmetic_correct.txt" />
+    <Content Include="testcases\pex2\arithmetic_incorrect.txt" />
+    <Content Include="testcases\pex2\formal_params_incorrect.txt" />
+    <Content Include="testcases\pex2\formal_params_correct.txt" />
+    <Content Include="testcases\pex2\actual_params_correct.txt" />
+    <Content Include="testcases\pex2\actual_params_incorrect.txt" />
+    <Content Include="testcases\pex2\functions_correct.txt" />
+    <Content Include="testcases\pex2\functions_incorrect.txt" />
+    <Content Include="testcases\pex2\while_incorrect.txt" />
+    <Content Include="testcases\pex2\while_correct.txt" />
+    <Content Include="testcases\pex2\main_incorrect.txt" />
+    <Content Include="testcases\pex2\main_correct.txt" />
+    <Content Include="testcases\pex3\test.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".vs\PEX Starter Pack\FileContentIndex\10f8b610-db3d-43f8-ac59-1fc46e0d4430.vsidx" />
+    <None Include=".vs\PEX Starter Pack\FileContentIndex\6b10195d-804f-4d2f-a9b9-ea7584653d2b.vsidx" />
+    <None Include=".vs\PEX Starter Pack\FileContentIndex\b458c083-8989-468a-9c1b-b66432f1af5e.vsidx" />
+    <None Include=".vs\PEX Starter Pack\FileContentIndex\d44c9263-e93a-4eb8-b611-fe24c83f4d32.vsidx" />
+    <None Include=".vs\PEX Starter Pack\v17\.wsuo" />
+    <None Include=".vs\slnx.sqlite" />
+    <None Include=".vs\VSWorkspaceState.json" />
+    <None Include="app.config" />
+    <None Include="Doxyfile" />
+    <None Include="Makefile.dotgnu" />
+    <None Include="Makefile.mono" />
+    <None Include="PEX_BUILD.bat" />
+    <None Include="PEX2_TEST.bat" />
+    <None Include="README.parser" />
+    <None Include="PEX1_TEST.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="testcases\pex4\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
+  <ProjectExtensions>
+    <VisualStudio AllowExistingFolder="true" />
+  </ProjectExtensions>
+</Project>

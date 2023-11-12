@@ -1,0 +1,9 @@
+foo(int x, string name){
+	string account => name;
+}
+
+
+foo2(double x){
+}
+
+

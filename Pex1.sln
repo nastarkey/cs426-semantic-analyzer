@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34018.315
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pex1", "Pex1.csproj", "{C5E9B153-5639-4445-81A9-410625C3E14A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C5E9B153-5639-4445-81A9-410625C3E14A}.Debug|x86.ActiveCfg = Debug|x86
+		{C5E9B153-5639-4445-81A9-410625C3E14A}.Debug|x86.Build.0 = Debug|x86
+		{C5E9B153-5639-4445-81A9-410625C3E14A}.Release|x86.ActiveCfg = Release|x86
+		{C5E9B153-5639-4445-81A9-410625C3E14A}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AC72F315-B1EE-4E74-9388-65DF19763C56}
+	EndGlobalSection
+EndGlobal

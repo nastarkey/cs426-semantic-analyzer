@@ -1,0 +1,11 @@
+const int x = 15;
+const string name = "Nathan";
+
+foo(int x, string name) {
+	string name2 = "Nathan";
+	print(name + name2);
+}
+
+main(){
+	foo(5, "Nathan");
+}

@@ -1,0 +1,4 @@
+"string1"
+"_string_"
+"this_is_a_string"
+"\""

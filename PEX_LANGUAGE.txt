@@ -1,0 +1,134 @@
+// This tells SableCC to put all of the code in a package called CS426
+Package CS426;
+
+// Helpers are sets that let you talk about multiple characters in the same way
+Helpers
+	whitespaces = ' ' | 9 | 10 | 13;
+	natural = ['1' .. '9'];
+	whole = ['0' + natural];
+	letter = [['a' .. 'z'] + ['A' .. 'Z']];
+	chars = [[32..126] - 34];
+	escape = '\';
+	quote = '"';
+	strquote = escape quote;
+	
+
+// PEX 1 - Lexer Portion
+Tokens
+	//Operations and EOL
+	assign = '=';
+	plus = '+';
+	minus = '-';
+	mult = '*';
+	div = '/';
+	eol = ';';
+	comma = ',';
+	promise = ':';
+	left_parenthesis = '(';
+	right_parenthesis = ')';
+	open_brace = '{';
+	close_brace = '}';
+	and = 'and';
+	or = 'or';
+	not = 'not';
+	lt = '<';
+	gt = '>';
+	lte = '<=';
+	gte = '>=';
+	eq = '==';
+	neq = '!=';
+
+	//Key Words
+	while = 'while';
+	if = 'if';
+	elif = 'elif';
+	else = 'else';
+	return = 'return';
+	main = 'main';
+	constant = 'const';
+	
+	//Identifiers ( variables, function names)
+	id = letter* ('_'? (letter)) (whole | letter)*;
+	
+	//Comments
+	comment = '/w' ([[0..0xffff] - [10+13]])*;
+	
+	//Literals
+	double = (whole+ '.' whole+) | (whole+ '.' whole+) ('e' | 'E') '-'? whole+;
+	integer = whole+;
+	string = quote ((chars*)+(strquote)*)+ quote;
+	
+
+	// Whitespace
+	blank = whitespaces+;
+
+Ignored Tokens
+	blank, comment;
+
+
+// PEX 2 - Parser Portion
+Productions
+	program = constant_declare_statement* function_declaration_statement* main_function_call;
+
+	statements = {multiple} statement statements | {single} ;
+	statement = {declaration} declare_statement | {assignment} assign_statement | {call} function_call_statement
+	| {main} main_function_call | {if_stmt} if_statement | {elif_stmt} elif_statement | {else_stmt} else_statement 
+	| {while_stmt} while_statement | {func_declaration} function_declaration_statement;
+
+	declare_statement = {no_assign} [type]:id [varname]:id eol 
+	| {assign} [type]:id [varname]:id assign or_exp eol 
+	| {assign_function} [type]:id [varname]:id assign function_call_statement;
+
+	constant_declare_statement = {const} constant [type]:id [varname]:id assign or_exp eol;
+
+	
+	main_function_call = main left_parenthesis formal_parameters right_parenthesis open_brace statements close_brace
+	| {no_param} main left_parenthesis right_parenthesis open_brace statements close_brace;
+
+	function_declaration_statement = {with_promise} [funcname]:id left_parenthesis formal_parameters right_parenthesis promise [type]:id open_brace statements close_brace
+	| {without_promise} [funcname]:id left_parenthesis formal_parameters right_parenthesis open_brace statements close_brace;
+
+	function_call_statement = [funcname]:id left_parenthesis parameters right_parenthesis eol;
+	formal_parameters = {single_param} [type]:id [param]:id | {multiple_params} [type]:id [param]:id comma formal_parameters;
+	parameters = {single_param} or_exp | {multiple_params} or_exp comma parameters;
+
+	assign_statement = {value} id assign or_exp eol | {function} id assign function_call_statement;
+
+	if_statement = if left_parenthesis or_exp right_parenthesis open_brace statements close_brace;
+	elif_statement = elif left_parenthesis or_exp right_parenthesis open_brace statements close_brace;
+	else_statement = else open_brace statements close_brace;
+	while_statement = while left_parenthesis or_exp right_parenthesis open_brace statements close_brace;
+
+
+	or_exp = {or} or_exp or and_exp | {pass} and_exp;
+	and_exp = {and} and_exp and not_exp | {pass} not_exp;
+	not_exp = {not} not_exp not comp_exp_eq | {pass} comp_exp_eq;
+	comp_exp_eq = {eq} [left]:exp0 eq [right]:exp0 
+	| {neq} [left]:exp0 neq [right]:exp0
+	| {pass} comp_exp_ltgt;
+
+	comp_exp_ltgt = {lt} [left]:exp0 lt [right]:exp0
+	| {lte} [left]:exp0 lte [right]:exp0
+	| {gt} [left]:exp0 gt [right]:exp0
+	| {gte} [left]:exp0 gte [right]:exp0
+	| {pass} exp0;
+
+	exp0 = {add} exp0 plus exp1 
+	| {sub} exp0 minus exp1 
+	| {pass} exp1;
+
+	exp1 = {multiply} exp1 mult exp2 
+	| {divide} exp1 div exp2 
+	| {pass} exp2;
+
+	exp2 = {negative} minus exp3
+	| {pass} exp3;
+
+	exp3 = {parenthesis} left_parenthesis or_exp right_parenthesis
+	| {pass} operand;
+
+	operand = {int} integer
+	| {double} double
+	| {variable} id
+	| {string} string;
+
