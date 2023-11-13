@@ -482,7 +482,7 @@ namespace CS426.analysis
             }
             else if (((VariableDefinition)idDef).Type.Name != expDef.Name)
             {
-                PrintWarning(node.GetId(), "Types don't match!");
+                PrintWarning(node.GetId(), "Variable type and expression type doesn't match!");
             }
             else
             {
@@ -493,23 +493,23 @@ namespace CS426.analysis
         public override void OutAFunctionAssignStatement(AFunctionAssignStatement node)
         {
             Definition functionDef;
-            Definition expDef;
+            Definition idDef;
 
-            if (!LocalSymbolTable.TryGetValue(node.GetId().Text, out functionDef))
+            if (!LocalSymbolTable.TryGetValue(node.GetId().Text, out idDef))
             {
                 PrintWarning(node.GetId(), "Identifier " + node.GetId().Text + " does not exist!");
             }
-            else if (!(functionDef is FunctionDefinition))
+            else if (!(idDef is VariableDefinition))
             {
-                PrintWarning(node.GetId(), "Function " + node.GetId().Text + " is not a function!");
+                PrintWarning(node.GetId(), "Identifier " + node.GetId().Text + " is not a variable!");
             }
-            else if (!DecoratedParseTree.TryGetValue(node.GetFunctionCallStatement(), out expDef))
+            else if (!DecoratedParseTree.TryGetValue(node.GetFunctionCallStatement(), out functionDef))
             {
                 // Error would be printed at lower level
             }
-            else if (((FunctionDefinition)functionDef).ReturnType.Name != expDef.Name)
+            else if (((VariableDefinition)idDef).Type.Name != ((FunctionDefinition)functionDef).ReturnType.Name)
             {
-                PrintWarning(node.GetId(), "Types don't match!");
+                PrintWarning(node.GetId(), "Variable type and function return type don't match!");
             }
             else
             {
@@ -581,11 +581,53 @@ namespace CS426.analysis
         {
             Definition typeDef;
             Definition idDef;
+            Definition expDef;
+
+            DecoratedParseTree.TryGetValue(node.GetOrExp(), out expDef);
 
             if (!GlobalSymbolTable.TryGetValue(node.GetType().Text, out typeDef))
             {
                 PrintWarning(node.GetType(), "Type " + node.GetType().Text + " does not exist!");
             }
+            else if (!(typeDef is TypeDefinition))
+            {
+                PrintWarning(node.GetType(), "Identifier " + node.GetType().Text + " is not a recognized data type!");
+            }
+            else if (LocalSymbolTable.TryGetValue(node.GetVarname().Text, out idDef))
+            {
+                PrintWarning(node.GetVarname(), "Identifier " + node.GetVarname().Text + " is already being used!");
+            }
+            else if (typeDef.Name != expDef.Name)
+            {
+                PrintWarning(node.GetType(), "Variable type and expression type don't match");
+            }
+        }
+
+        public override void OutAAssignFunctionDeclareStatement(AAssignFunctionDeclareStatement node)
+        {
+            Definition typeDef;
+            Definition idDef;
+            Definition functionDef;
+
+            DecoratedParseTree.TryGetValue(node.GetFunctionCallStatement(), out functionDef);
+
+            if (!GlobalSymbolTable.TryGetValue(node.GetType().Text, out typeDef))
+            {
+                PrintWarning(node.GetType(), "Type " + node.GetType().Text + " does not exist!");
+            }
+            else if (!(typeDef is TypeDefinition))
+            {
+                PrintWarning(node.GetType(), "Identifier " + node.GetType().Text + " is not a recognized data type!");
+            }
+            else if (LocalSymbolTable.TryGetValue(node.GetVarname().Text, out idDef))
+            {
+                PrintWarning(node.GetVarname(), "Identifier " + node.GetVarname().Text + " is already being used!");
+            }
+            else if (((FunctionDefinition)functionDef).ReturnType.Name != typeDef.Name)
+            {
+                PrintWarning(node.GetType(), "Variable type and function type don't match");
+            }
+
         }
 
 

@@ -1,5 +1,4 @@
 main(){
-	int x;
-	string x;
-	bob y;
+	int x = 5;
+	string y = 165;
 }
