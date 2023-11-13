@@ -176,6 +176,20 @@ namespace CS426.analysis
             }
         }
 
+        public override void OutAMultiplyExp1(AMultiplyExp1 node)
+        {
+            // check in parse tree
+
+            // can only multiply numbers together
+        }
+
+        public override void OutADivideExp1(ADivideExp1 node)
+        {
+            // check in tree
+
+            // can only divide numbers together
+        }
+
 
 
         // --------------------------------------
@@ -193,6 +207,20 @@ namespace CS426.analysis
             {
                 DecoratedParseTree.Add(node, exp1Def);
             }
+        }
+
+        public override void OutAAddExp0(AAddExp0 node)
+        {
+            // in tree?
+
+            // can only add numbers together
+        }
+
+        public override void OutASubExp0(ASubExp0 node)
+        {
+            // treeeeeeee?
+
+            // can only subtract numbers
         }
 
 
