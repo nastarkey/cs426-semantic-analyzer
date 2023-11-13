@@ -113,11 +113,15 @@ namespace CS426.analysis
         public override void OutAParenthesisExp3(AParenthesisExp3 node)
         {
             // Need to do
-            Definition operandDef;
+            Definition orDef;
 
-            if (!DecoratedParseTree.TryGetValue(node.GetOrExp(), out operandDef))
+            if (!DecoratedParseTree.TryGetValue(node.GetOrExp(), out orDef))
             {
                 //Error would be printed at lower level
+            }
+            else
+            {
+                DecoratedParseTree.Add(node, orDef);
             }
         }
 
@@ -150,7 +154,7 @@ namespace CS426.analysis
             // check to make sure it is infront of a number or double
             else if (!(exp3Def is NumberDefinition) || !(exp3Def is DoubleDefinition))
             {
-                PrintWarning(node.GetMinus(), "Only a number can be negated");
+                PrintWarning(node.GetMinus(), "Only a number can be negated!");
             }
             else
             {
@@ -178,16 +182,75 @@ namespace CS426.analysis
 
         public override void OutAMultiplyExp1(AMultiplyExp1 node)
         {
-            // check in parse tree
+            Definition exp2Def;
+            Definition exp1Def;
 
-            // can only multiply numbers together
+            DecoratedParseTree.TryGetValue(node.GetExp1(), out exp1Def);
+            // see if it is already in tree like above
+            if (!DecoratedParseTree.TryGetValue(node.GetExp2(), out exp2Def))
+            {
+                //Error would be printed at lower level
+            }
+            // check to make sure it is infront of a number or double
+            else if (!(exp2Def is NumberDefinition) || !(exp2Def is DoubleDefinition))
+            {
+                PrintWarning(node.GetMult(), "Only a number can be multiplied!");
+            }
+            else if (exp1Def is NumberDefinition)
+            {
+                if (exp2Def is DoubleDefinition)
+                {
+                    PrintWarning(node.GetMult(), "Can only multiply same types!");
+                }
+            }
+            else if (exp1Def is DoubleDefinition)
+            {
+                if (exp2Def is NumberDefinition)
+                {
+                    PrintWarning(node.GetMult(), "Can only multiply same types!");
+                }
+            }
+            else
+            {
+                DecoratedParseTree.Add(node, exp2Def);
+            }
         }
 
         public override void OutADivideExp1(ADivideExp1 node)
         {
-            // check in tree
+            Definition exp2Def;
+            Definition exp1Def;
 
-            // can only divide numbers together
+            DecoratedParseTree.TryGetValue(node.GetExp1(), out exp1Def);
+            // see if it is already in tree like above
+            if (!DecoratedParseTree.TryGetValue(node.GetExp2(), out exp2Def))
+            {
+                //Error would be printed at lower level
+            }
+            // check to make sure it is infront of a number or double
+            else if (!(exp2Def is NumberDefinition) || !(exp2Def is DoubleDefinition))
+            {
+                PrintWarning(node.GetDiv(), "Only a number can be divided!");
+            }
+            //only same types
+            else if (exp1Def is NumberDefinition)
+            {
+                if (exp2Def is DoubleDefinition)
+                {
+                    PrintWarning(node.GetDiv(), "Can only divide same types!");
+                }
+            }
+            else if (exp1Def is DoubleDefinition)
+            {
+                if (exp2Def is NumberDefinition)
+                {
+                    PrintWarning(node.GetDiv(), "Can only divide same types!");
+                }
+            }
+            else
+            {
+                DecoratedParseTree.Add(node, exp2Def);
+            }
         }
 
 
@@ -211,16 +274,74 @@ namespace CS426.analysis
 
         public override void OutAAddExp0(AAddExp0 node)
         {
-            // in tree?
+            Definition exp0Def;
+            Definition exp1Def;
 
-            // can only add numbers together
+            DecoratedParseTree.TryGetValue(node.GetExp0(), out exp0Def);
+            // see if it is already in tree like above
+            if (!DecoratedParseTree.TryGetValue(node.GetExp1(), out exp1Def))
+            {
+                //Error would be printed at lower level
+            }
+            // check to make sure it is infront of a number or double
+            else if (!(exp1Def is NumberDefinition) || !(exp1Def is DoubleDefinition))
+            {
+                PrintWarning(node.GetPlus(), "Only a number can be added!");
+            }
+            else if (exp0Def is NumberDefinition)
+            {
+                if (exp1Def is DoubleDefinition)
+                {
+                    PrintWarning(node.GetPlus(), "Can only add same types!");
+                }
+            }
+            else if (exp0Def is DoubleDefinition)
+            {
+                if (exp1Def is NumberDefinition)
+                {
+                    PrintWarning(node.GetPlus(), "Can only add same types!");
+                }
+            }
+            else
+            {
+                DecoratedParseTree.Add(node, exp1Def);
+            }
         }
 
         public override void OutASubExp0(ASubExp0 node)
         {
-            // treeeeeeee?
+            Definition exp0Def;
+            Definition exp1Def;
 
-            // can only subtract numbers
+            DecoratedParseTree.TryGetValue(node.GetExp0(), out exp0Def);
+            // see if it is already in tree like above
+            if (!DecoratedParseTree.TryGetValue(node.GetExp1(), out exp1Def))
+            {
+                //Error would be printed at lower level
+            }
+            // check to make sure it is infront of a number or double
+            else if (!(exp1Def is NumberDefinition) || !(exp1Def is DoubleDefinition))
+            {
+                PrintWarning(node.GetMinus(), "Only a number can be subtracted!");
+            }
+            else if (exp0Def is NumberDefinition)
+            {
+                if (exp1Def is DoubleDefinition)
+                {
+                    PrintWarning(node.GetMinus(), "Can only subtract same types!");
+                }
+            }
+            else if (exp0Def is DoubleDefinition)
+            {
+                if (exp1Def is NumberDefinition)
+                {
+                    PrintWarning(node.GetMinus(), "Can only subtract same types!");
+                }
+            }
+            else
+            {
+                DecoratedParseTree.Add(node, exp1Def);
+            }
         }
 
 
@@ -318,6 +439,98 @@ namespace CS426.analysis
             }
         }
 
+        // --------------------------------------
+        // while statement
+        // --------------------------------------
 
+
+
+        // --------------------------------------
+        // else statement
+        // --------------------------------------
+
+
+        // --------------------------------------
+        // elif statement
+        // --------------------------------------
+
+
+        // --------------------------------------
+        // if statement
+        // --------------------------------------
+
+
+        // --------------------------------------
+        // assign statement
+        // --------------------------------------
+
+
+        // --------------------------------------
+        // parameters
+        // --------------------------------------
+
+
+        // --------------------------------------
+        // formal parameters
+        // --------------------------------------
+
+
+        // --------------------------------------
+        // function call statment
+        // --------------------------------------
+
+
+        // --------------------------------------
+        // function declaration statement
+        // --------------------------------------
+
+
+        // --------------------------------------
+        // main function call
+        // --------------------------------------
+
+
+        // --------------------------------------
+        // constant declare statment
+        // --------------------------------------
+
+
+        // --------------------------------------
+        // declare statement
+        // --------------------------------------
+        public override void OutANoAssignDeclareStatement(ANoAssignDeclareStatement node)
+        {
+            Definition typeDef;
+            Definition idDef;
+
+            if (!GlobalSymbolTable.TryGetValue(node.GetType().Text, out typeDef))
+            {
+                PrintWarning(node.GetType(), "Type " + node.GetType().Text + " does not exist!");
+            }
+            else if (!(typeDef is TypeDefinition))
+            {
+                PrintWarning(node.GetType(), "Identifier " + node.GetType().Text + " is not a recognized data type!");
+            }
+            else if (!LocalSymbolTable.TryGetValue(node.GetVarname().Text, out idDef))
+            {
+                PrintWarning(node.GetVarname(), "Identifier " + node.GetType().Text + " is already being used!");
+            }
+        }
+
+        public override void OutAAssignDeclareStatement(AAssignDeclareStatement node)
+        {
+            Definition typeDef;
+            Definition idDef;
+
+            if (!GlobalSymbolTable.TryGetValue(node.GetType().Text, out typeDef))
+            {
+                PrintWarning(node.GetType(), "Type " + node.GetType().Text + " does not exist!");
+            }
+        }
+
+
+        // --------------------------------------
+        // 
+        // --------------------------------------
     }
 }

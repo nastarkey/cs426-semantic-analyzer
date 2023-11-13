@@ -1,11 +1,83 @@
-const int x = -"Nathan";
-const string name = "Nathan";
+const int TOTAL = 3;   
+const double TOTAL = 3.0;  /w  :(
+const bob INSTANCES = 2;	/w  :(
+const int COUNTER = TOTAL; 
+const double DATA = 6;  /w :(
 
-foo(int x, string name) {
-	string name2 = "Nathan";
-	print(name + name2);
+alice(int x, double y) {
+   z = y+2;	/w :(
+   int z;
+   z = x+y+2;
+   }
+
+alice(int x, double y) {  /w :(
+   x = y-6;
 }
 
-main(){
-	foo(5, "Nathan");
+trent(bob x) {  /w :(
+   x = "hello";
+}
+
+bar(int x, double x) { /w :(
+   double pi;
+   pi = 3.14159;
+}
+
+main() {
+    int x;
+    int y;
+    string z;
+    string q;
+    double z; /w :(
+    z = "Supercalifragalisticexpialidocious";
+    q = "antidisestablishmentarianism";
+    w = x+y;  /w :(
+    x = w+y;  /w :(
+    TOTAL = TOTAL+1;  /w :(
+    y = "my dog has fleas";  /w :(
+    double = 3.14;  /w :(
+    if (x+5) {  /w :(
+    y = x;
+    }
+
+    if (x==5) {  
+    y = x;
+    }
+
+    while (x+5) {  /w :(
+    y = x;
+    }
+
+    while (x==5) {  
+    y = x;
+    }
+
+    alice(2,5.0); 
+    alice(3,4);  /w :(
+    bob(1,2); /w :(
+    eve(0);  /w :(
+    x = (y+3*x)/4;
+    x = y+"hi there";  /w :(
+    x = y - 3.14; /w :(
+    x = x*q;  /w :(
+    x = y/int;  /w :(
+    y = 3*x+y; /w :(
+
+    if (x==0 and y) {  /w :(
+    x = 2;
+    }
+
+    while (x+y) { /w :(
+        x = 2*x;
+    }
+
+    if (3 < 5.14) { /w :(
+       if (x < y) {
+          x = x+1;
+       }
+    }
+
+    while (z >= q) { /w :(
+       alice(2);  /w :(
+    }
 }

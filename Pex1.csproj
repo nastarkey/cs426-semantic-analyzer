@@ -98,6 +98,7 @@
     <Content Include="testcases\pex2\while_correct.txt" />
     <Content Include="testcases\pex2\main_incorrect.txt" />
     <Content Include="testcases\pex2\main_correct.txt" />
+    <Content Include="testcases\pex3\test2.txt" />
     <Content Include="testcases\pex3\test.txt" />
   </ItemGroup>
   <ItemGroup>
