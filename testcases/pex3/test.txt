@@ -1,4 +1,4 @@
-const int x = 15;
+const int x = -"Nathan";
 const string name = "Nathan";
 
 foo(int x, string name) {

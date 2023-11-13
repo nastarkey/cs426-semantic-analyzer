@@ -19,3 +19,10 @@ F:\Projects\cs426-semantic-analyzer\obj\x86\Debug\Pex1.csproj.AssemblyReference.
 F:\Projects\cs426-semantic-analyzer\obj\x86\Debug\Pex1.csproj.CoreCompileInputs.cache
 F:\Projects\cs426-semantic-analyzer\obj\x86\Debug\ConsoleApplication.exe
 F:\Projects\cs426-semantic-analyzer\obj\x86\Debug\ConsoleApplication.pdb
+C:\Users\C24Nathaniel.Starkey\OneDrive - afacademy.af.edu\Desktop\cs426-semantic-analyzer\bin\Debug\ConsoleApplication.exe.config
+C:\Users\C24Nathaniel.Starkey\OneDrive - afacademy.af.edu\Desktop\cs426-semantic-analyzer\bin\Debug\ConsoleApplication.exe
+C:\Users\C24Nathaniel.Starkey\OneDrive - afacademy.af.edu\Desktop\cs426-semantic-analyzer\bin\Debug\ConsoleApplication.pdb
+C:\Users\C24Nathaniel.Starkey\OneDrive - afacademy.af.edu\Desktop\cs426-semantic-analyzer\obj\x86\Debug\Pex1.csproj.AssemblyReference.cache
+C:\Users\C24Nathaniel.Starkey\OneDrive - afacademy.af.edu\Desktop\cs426-semantic-analyzer\obj\x86\Debug\Pex1.csproj.CoreCompileInputs.cache
+C:\Users\C24Nathaniel.Starkey\OneDrive - afacademy.af.edu\Desktop\cs426-semantic-analyzer\obj\x86\Debug\ConsoleApplication.exe
+C:\Users\C24Nathaniel.Starkey\OneDrive - afacademy.af.edu\Desktop\cs426-semantic-analyzer\obj\x86\Debug\ConsoleApplication.pdb

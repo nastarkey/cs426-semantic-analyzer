@@ -109,13 +109,13 @@ namespace CS426.analysis
             }
 
         }
-
+        // idk if I really need to check anything for parenthesis
         public override void OutAParenthesisExp3(AParenthesisExp3 node)
         {
             // Need to do
             Definition operandDef;
 
-            if (!DecoratedParseTree.TryGetValue(node.GetOperand(), out operandDef))
+            if (!DecoratedParseTree.TryGetValue(node.GetOrExp(), out operandDef))
             {
                 //Error would be printed at lower level
             }
@@ -136,6 +136,27 @@ namespace CS426.analysis
             {
                 DecoratedParseTree.Add(node, exp3Def);
             }
+        }
+
+        public override void OutANegativeExp2(ANegativeExp2 node)
+        {
+            Definition exp3Def;
+
+            // see if it is already in tree like above
+            if (!DecoratedParseTree.TryGetValue(node.GetExp3(), out exp3Def))
+            {
+                //Error would be printed at lower level
+            }
+            // check to make sure it is infront of a number or double
+            else if (!(exp3Def is NumberDefinition) || !(exp3Def is DoubleDefinition))
+            {
+                PrintWarning(node.GetMinus(), "Only a number can be negated");
+            }
+            else
+            {
+                DecoratedParseTree.Add(node, exp3Def);
+            }
+
         }
 
         // --------------------------------------
