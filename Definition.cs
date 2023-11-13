@@ -34,6 +34,7 @@ namespace CS426.analysis
     public class FunctionDefinition : Definition
     {
         public List<VariableDefinition> parameters;
+        public TypeDefinition ReturnType;
     }
 
 }

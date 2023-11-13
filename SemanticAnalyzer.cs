@@ -463,7 +463,59 @@ namespace CS426.analysis
         // --------------------------------------
         // assign statement
         // --------------------------------------
+        public override void OutAValueAssignStatement(AValueAssignStatement node)
+        {
+            Definition idDef;
+            Definition expDef;
 
+            if(!LocalSymbolTable.TryGetValue(node.GetId().Text, out idDef))
+            {
+                PrintWarning(node.GetId(), "Identifier " + node.GetId().Text + " does not exist!");
+            }
+            else if (!(idDef is VariableDefinition))
+            {
+                PrintWarning(node.GetId(), "Identifier " + node.GetId().Text + " is not a variable!");
+            }
+            else if (!DecoratedParseTree.TryGetValue(node.GetOrExp(), out expDef))
+            {
+                // Error would be printed at lower level
+            }
+            else if (((VariableDefinition)idDef).Type.Name != expDef.Name)
+            {
+                PrintWarning(node.GetId(), "Types don't match!");
+            }
+            else
+            {
+                // dont need to do anything all cases done
+            }
+        }
+
+        public override void OutAFunctionAssignStatement(AFunctionAssignStatement node)
+        {
+            Definition functionDef;
+            Definition expDef;
+
+            if (!LocalSymbolTable.TryGetValue(node.GetId().Text, out functionDef))
+            {
+                PrintWarning(node.GetId(), "Identifier " + node.GetId().Text + " does not exist!");
+            }
+            else if (!(functionDef is FunctionDefinition))
+            {
+                PrintWarning(node.GetId(), "Function " + node.GetId().Text + " is not a function!");
+            }
+            else if (!DecoratedParseTree.TryGetValue(node.GetFunctionCallStatement(), out expDef))
+            {
+                // Error would be printed at lower level
+            }
+            else if (((FunctionDefinition)functionDef).ReturnType.Name != expDef.Name)
+            {
+                PrintWarning(node.GetId(), "Types don't match!");
+            }
+            else
+            {
+                // dont need to do anything all cases done
+            }
+        }
 
         // --------------------------------------
         // parameters
