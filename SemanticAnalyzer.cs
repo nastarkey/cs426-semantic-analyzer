@@ -40,7 +40,7 @@ namespace CS426.analysis
 
         public void PrintWarning(Token t, String message)
         {
-            Console.WriteLine("Line " + t.Line + "Col " + t.Pos + ": " + message);
+            Console.WriteLine("Line " + t.Line + " Col " + t.Pos + ": " + message);
         }
 
         // --------------------------------------
@@ -112,7 +112,163 @@ namespace CS426.analysis
 
         public override void OutAParenthesisExp3(AParenthesisExp3 node)
         {
-            
+            // Need to do
+            Definition operandDef;
+
+            if (!DecoratedParseTree.TryGetValue(node.GetOperand(), out operandDef))
+            {
+                //Error would be printed at lower level
+            }
         }
+
+        // --------------------------------------
+        // Expression 2 (38mins)
+        // --------------------------------------
+        public override void OutAPassExp2(APassExp2 node)
+        {
+            Definition exp3Def;
+
+            if (!DecoratedParseTree.TryGetValue(node.GetExp3(), out exp3Def))
+            {
+                //Error would be printed at lower level
+            }
+            else
+            {
+                DecoratedParseTree.Add(node, exp3Def);
+            }
+        }
+
+        // --------------------------------------
+        // Expression 1
+        // --------------------------------------
+        public override void OutAPassExp1(APassExp1 node)
+        {
+            Definition exp2Def;
+
+            if (!DecoratedParseTree.TryGetValue(node.GetExp2(), out exp2Def))
+            {
+                //Error would be printed at lower level
+            }
+            else
+            {
+                DecoratedParseTree.Add(node, exp2Def);
+            }
+        }
+
+
+
+        // --------------------------------------
+        // Expression 0
+        // --------------------------------------
+        public override void OutAPassExp0(APassExp0 node)
+        {
+            Definition exp1Def;
+
+            if (!DecoratedParseTree.TryGetValue(node.GetExp1(), out exp1Def))
+            {
+                //Error would be printed at lower level
+            }
+            else
+            {
+                DecoratedParseTree.Add(node, exp1Def);
+            }
+        }
+
+
+
+        // --------------------------------------
+        // comp_exp_ltgt
+        // --------------------------------------
+        public override void OutAPassCompExpLtgt(APassCompExpLtgt node)
+        {
+            Definition exp0Def;
+
+            if (!DecoratedParseTree.TryGetValue(node.GetExp0(), out exp0Def))
+            {
+                //Error would be printed at lower level
+            }
+            else
+            {
+                DecoratedParseTree.Add(node, exp0Def);
+            }
+        }
+
+
+
+        // --------------------------------------
+        // comp exp eq
+        // --------------------------------------
+        public override void OutAPassCompExpEq(APassCompExpEq node)
+        {
+            Definition compexpltgtDef;
+
+            if (!DecoratedParseTree.TryGetValue(node.GetCompExpLtgt(), out compexpltgtDef))
+            {
+                //Error would be printed at lower level
+            }
+            else
+            {
+                DecoratedParseTree.Add(node, compexpltgtDef);
+            }
+        }
+
+
+
+        // --------------------------------------
+        // not exp
+        // --------------------------------------
+        public override void OutAPassNotExp(APassNotExp node)
+        {
+            Definition CompExpEqDef;
+
+            if (!DecoratedParseTree.TryGetValue(node.GetCompExpEq(), out CompExpEqDef))
+            {
+                //Error would be printed at lower level
+            }
+            else
+            {
+                DecoratedParseTree.Add(node, CompExpEqDef);
+            }
+        }
+
+
+
+        // --------------------------------------
+        //  and exp
+        // --------------------------------------
+        public override void OutAPassAndExp(APassAndExp node)
+        {
+            Definition NotExpDef;
+
+            if (!DecoratedParseTree.TryGetValue(node.GetNotExp(), out NotExpDef))
+            {
+                //Error would be printed at lower level
+            }
+            else
+            {
+                DecoratedParseTree.Add(node, NotExpDef);
+            }
+        }
+
+
+
+        // --------------------------------------
+        //  or exp
+        // --------------------------------------
+        public override void OutAPassOrExp(APassOrExp node)
+        {
+            Definition AndExpDef;
+
+            if (!DecoratedParseTree.TryGetValue(node.GetAndExp(), out AndExpDef))
+            {
+                //Error would be printed at lower level
+            }
+            else
+            {
+                DecoratedParseTree.Add(node, AndExpDef);
+            }
+        }
+
+
     }
 }

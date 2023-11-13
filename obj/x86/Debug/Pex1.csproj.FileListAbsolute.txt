@@ -12,3 +12,10 @@ C:\Users\C24Nathaniel.Starkey\OneDrive - afacademy.af.edu\Documents\school\CS 42
 C:\Users\C24Nathaniel.Starkey\OneDrive - afacademy.af.edu\Documents\school\CS 426\Starkey PEX\bin\Debug\ConsoleApplication.exe.config
 C:\Users\C24Nathaniel.Starkey\OneDrive - afacademy.af.edu\Documents\school\CS 426\Starkey PEX\bin\Debug\ConsoleApplication.exe
 C:\Users\C24Nathaniel.Starkey\OneDrive - afacademy.af.edu\Documents\school\CS 426\Starkey PEX\bin\Debug\ConsoleApplication.pdb
+F:\Projects\cs426-semantic-analyzer\bin\Debug\ConsoleApplication.exe.config
+F:\Projects\cs426-semantic-analyzer\bin\Debug\ConsoleApplication.exe
+F:\Projects\cs426-semantic-analyzer\bin\Debug\ConsoleApplication.pdb
+F:\Projects\cs426-semantic-analyzer\obj\x86\Debug\Pex1.csproj.AssemblyReference.cache
+F:\Projects\cs426-semantic-analyzer\obj\x86\Debug\Pex1.csproj.CoreCompileInputs.cache
+F:\Projects\cs426-semantic-analyzer\obj\x86\Debug\ConsoleApplication.exe
+F:\Projects\cs426-semantic-analyzer\obj\x86\Debug\ConsoleApplication.pdb
