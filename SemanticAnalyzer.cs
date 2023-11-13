@@ -112,7 +112,7 @@ namespace CS426.analysis
         // idk if I really need to check anything for parenthesis
         public override void OutAParenthesisExp3(AParenthesisExp3 node)
         {
-            // Need to do
+            
             Definition orDef;
 
             if (!DecoratedParseTree.TryGetValue(node.GetOrExp(), out orDef))
