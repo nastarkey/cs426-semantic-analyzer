@@ -515,6 +515,11 @@ namespace CS426.analysis
             {
                 PrintWarning(node.GetVarname(), "Identifier " + node.GetType().Text + " is already being used!");
             }
+            else
+            {
+                VariableDefinition newVarDef = new VariableDefinition();
+                newVarDef.Name = node.GetVarname().Text;
+            }
         }
 
         public override void OutAAssignDeclareStatement(AAssignDeclareStatement node)
