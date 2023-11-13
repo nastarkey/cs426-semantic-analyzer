@@ -1,3 +1,4 @@
 main(){
-	bob x;
+	int x;
+	string x;
 }

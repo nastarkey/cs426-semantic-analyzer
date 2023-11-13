@@ -511,14 +511,17 @@ namespace CS426.analysis
             {
                 PrintWarning(node.GetType(), "Identifier " + node.GetType().Text + " is not a recognized data type!");
             }
-            else if (!LocalSymbolTable.TryGetValue(node.GetVarname().Text, out idDef))
+            else if (LocalSymbolTable.TryGetValue(node.GetVarname().Text, out idDef))
             {
-                PrintWarning(node.GetVarname(), "Identifier " + node.GetType().Text + " is already being used!");
+                PrintWarning(node.GetVarname(), "Identifier " + node.GetVarname().Text + " is already being used!");
             }
             else
             {
                 VariableDefinition newVarDef = new VariableDefinition();
                 newVarDef.Name = node.GetVarname().Text;
+                newVarDef.Type = (TypeDefinition)typeDef;
+
+                LocalSymbolTable.Add(node.GetVarname().Text, newVarDef);
             }
         }
 
