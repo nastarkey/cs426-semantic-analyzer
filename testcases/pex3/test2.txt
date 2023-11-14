@@ -1,3 +1,7 @@
+foo(int x, int y) {
+	int x;
+}
+
 main(){
 	int x = 5;
 	int y;

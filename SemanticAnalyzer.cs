@@ -19,6 +19,9 @@ namespace CS426.analysis
         //Decorated Parse Tree
         Dictionary<Node, Definition> DecoratedParseTree = new Dictionary<Node, Definition>();
 
+        // High scope temporary array fopr formal params
+        private List<VariableDefinition> tempFormalDeclarations = new List<VariableDefinition>();
+
         public override void InAProgram(AProgram node)
         {
             Definition intDef = new NumberDefinition();
@@ -75,7 +78,7 @@ namespace CS426.analysis
             string varName = node.GetId().Text;
             Definition varDef;
 
-            if(!LocalSymbolTable.TryGetValue(varName, out varDef))
+            if (!LocalSymbolTable.TryGetValue(varName, out varDef))
             {
                 PrintWarning(node.GetId(), varName + " does not exist!");
             }
@@ -99,7 +102,7 @@ namespace CS426.analysis
         {
             Definition operandDef;
 
-            if(!DecoratedParseTree.TryGetValue(node.GetOperand(), out operandDef))
+            if (!DecoratedParseTree.TryGetValue(node.GetOperand(), out operandDef))
             {
                 //Error would be printed at lower level
             }
@@ -112,7 +115,7 @@ namespace CS426.analysis
         // idk if I really need to check anything for parenthesis
         public override void OutAParenthesisExp3(AParenthesisExp3 node)
         {
-            
+
             Definition orDef;
 
             if (!DecoratedParseTree.TryGetValue(node.GetOrExp(), out orDef))
@@ -196,8 +199,8 @@ namespace CS426.analysis
             {
                 PrintWarning(node.GetMult(), "Only a number can be multiplied!");
             }
-            
-            else if (exp1Def.GetType() != exp2Def.GetType()) 
+
+            else if (exp1Def.GetType() != exp2Def.GetType())
             {
                 PrintWarning(node.GetMult(), "Cannot multiply " + exp1Def.Name + " by " + exp2Def.Name);
             }
@@ -429,7 +432,7 @@ namespace CS426.analysis
             Definition idDef;
             Definition expDef;
 
-            if(!LocalSymbolTable.TryGetValue(node.GetId().Text, out idDef))
+            if (!LocalSymbolTable.TryGetValue(node.GetId().Text, out idDef))
             {
                 PrintWarning(node.GetId(), "Identifier " + node.GetId().Text + " does not exist!");
             }
@@ -486,7 +489,92 @@ namespace CS426.analysis
         // --------------------------------------
         // formal parameters
         // --------------------------------------
+        public override void InAMultipleParamsFormalParameters(AMultipleParamsFormalParameters node)
+        {
+            Definition newVarExpression = new VariableDefinition();
+            if (GlobalSymbolTable.TryGetValue(node.GetParam().Text, out newVarExpression))
+            {
+                PrintWarning(node.GetParam(), node.GetParam().Text + "Has already been declared at a higher scope.");
+            }
+            else
+            {
+                newVarExpression = new VariableDefinition();
+                Definition newTypeExpression;
 
+                for (int i = 0; i < tempFormalDeclarations.Count; i++)
+                {
+                    if (tempFormalDeclarations[i].Name == node.GetParam().Text)
+                    {
+                        PrintWarning(node.GetParam(), node.GetParam().Text + " has already been declared as a parameter.");
+                        return;
+                    }
+                }
+
+
+                if (!GlobalSymbolTable.TryGetValue(node.GetType().Text, out newTypeExpression))
+                {
+                    PrintWarning(node.GetType(), "Type " + node.GetType().Text + " does not exist!");
+                }
+                else if (!(newTypeExpression is TypeDefinition))
+                {
+                    PrintWarning(node.GetType(), "Identifier " + node.GetType().Text + " is not a recognized data type!");
+                }
+                else
+                {
+                    newVarExpression = new VariableDefinition();
+                    newVarExpression.Name = node.GetParam().Text;
+                    ((VariableDefinition)newVarExpression).Type = (TypeDefinition)newTypeExpression;
+                    tempFormalDeclarations.Add((VariableDefinition) newVarExpression);
+                }
+            }
+        }
+
+        public override void OutASingleParamFormalParameters(ASingleParamFormalParameters node)
+        {
+            Definition newVarExpression;
+            if (GlobalSymbolTable.TryGetValue(node.GetParam().Text, out newVarExpression))
+            {
+                PrintWarning(node.GetParam(), node.GetParam().Text + "Has already been declared at a higher scope.");
+            }
+            else
+            {
+                newVarExpression = new VariableDefinition();
+                Definition newTypeExpression;
+
+                for (int i = 0; i < tempFormalDeclarations.Count; i++)
+                {
+                    Console.WriteLine(tempFormalDeclarations[i].Name + " " + node.GetParam().Text);
+                    if (tempFormalDeclarations[i].Name == node.GetParam().Text)
+                    {
+                        PrintWarning(node.GetParam(), node.GetParam().Text + " has already been declared as a parameter.");
+                        return;
+                    }
+                }
+
+                if (!GlobalSymbolTable.TryGetValue(node.GetType().Text, out newTypeExpression))
+                {
+                    PrintWarning(node.GetType(), "Type " + node.GetType().Text + " does not exist!");
+                }
+                else if (!(newTypeExpression is TypeDefinition))
+                {
+                    PrintWarning(node.GetType(), "Identifier " + node.GetType().Text + " is not a recognized data type!");
+                }
+                else
+                {
+                    newVarExpression = new VariableDefinition();
+                    newVarExpression.Name = node.GetParam().Text;
+                    ((VariableDefinition) newVarExpression).Type = (TypeDefinition)newTypeExpression;
+                    tempFormalDeclarations.Add((VariableDefinition)newVarExpression);
+                }
+
+                foreach (VariableDefinition variable in tempFormalDeclarations)
+                {
+                    Definition tempDef = variable;
+                    string id = variable.Name;
+                    LocalSymbolTable[id] = variable;
+                }
+            }
+        }
 
         // --------------------------------------
         // function call statment
@@ -497,7 +585,7 @@ namespace CS426.analysis
 
             if (!GlobalSymbolTable.TryGetValue(node.GetFuncname().Text, out idDef))
             {
-                PrintWarning
+                //PrintWarning
             }
         }
 
@@ -514,21 +602,35 @@ namespace CS426.analysis
             }
             else
             {
+
+
+                tempFormalDeclarations = new List<VariableDefinition>();
                 LocalSymbolTable = new Dictionary<string, Definition>();
 
                 // Register the new function definition ion the global table
                 FunctionDefinition newFuncDef = new FunctionDefinition();
 
                 newFuncDef.Name = node.GetFuncname().Text;
-                newFuncDef.parameters = new List<VariableDefinition>();
+                newFuncDef.parameters = tempFormalDeclarations;
+
 
                 GlobalSymbolTable.Add(node.GetFuncname().Text, newFuncDef);
             }
         }
 
+
+
         public override void OutAWithoutPromiseFunctionDeclarationStatement(AWithoutPromiseFunctionDeclarationStatement node)
         {
             LocalSymbolTable = new Dictionary<string, Definition>();
+            Definition newFuncDef;
+
+            if (GlobalSymbolTable.TryGetValue(node.GetFuncname().Text, out newFuncDef))
+            {
+                ((FunctionDefinition)newFuncDef).parameters = tempFormalDeclarations;
+            }
+
+            GlobalSymbolTable[newFuncDef.Name] = newFuncDef;
         }
 
         // --------------------------------------
