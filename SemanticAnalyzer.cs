@@ -512,9 +512,9 @@ namespace CS426.analysis
                     {
                         Console.WriteLine("Parameter " + tempParams[i].Name + " not defined");
 
-                    } else if (!(tempParams[i] is TypeDefinition) || !(tempParams.GetType() == tempDef.GetType()))
+                    } else if (!(tempParams[i] is TypeDefinition) || !(tempParams[i].GetType() == tempDef.GetType()))
                     {
-                        Console.WriteLine("Parameter " + tempParams[i].Name + " is an incoirrect type");
+                        Console.WriteLine("Parameter " + tempParams[i] + " is an incorrect type");
                     }
                 }
             }
