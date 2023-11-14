@@ -269,19 +269,9 @@ namespace CS426.analysis
             {
                 PrintWarning(node.GetPlus(), "Only a number can be added!");
             }
-            else if (exp0Def is NumberDefinition)
+            else if (exp1Def.GetType() != exp0Def.GetType())
             {
-                if (exp1Def is DoubleDefinition)
-                {
-                    PrintWarning(node.GetPlus(), "Can only add same types!");
-                }
-            }
-            else if (exp0Def is DoubleDefinition)
-            {
-                if (exp1Def is NumberDefinition)
-                {
-                    PrintWarning(node.GetPlus(), "Can only add same types!");
-                }
+                PrintWarning(node.GetPlus(), "Cannot add " + exp1Def.Name + " by " + exp0Def.Name);
             }
             else
             {
@@ -305,19 +295,9 @@ namespace CS426.analysis
             {
                 PrintWarning(node.GetMinus(), "Only a number can be subtracted!");
             }
-            else if (exp0Def is NumberDefinition)
+            else if (exp1Def.GetType() != exp0Def.GetType())
             {
-                if (exp1Def is DoubleDefinition)
-                {
-                    PrintWarning(node.GetMinus(), "Can only subtract same types!");
-                }
-            }
-            else if (exp0Def is DoubleDefinition)
-            {
-                if (exp1Def is NumberDefinition)
-                {
-                    PrintWarning(node.GetMinus(), "Can only subtract same types!");
-                }
+                PrintWarning(node.GetMinus(), "Cannot subtract " + exp1Def.Name + " by " + exp0Def.Name);
             }
             else
             {
