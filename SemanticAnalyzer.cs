@@ -491,17 +491,44 @@ namespace CS426.analysis
         // --------------------------------------
         // function call statment
         // --------------------------------------
-        public override void InAFunctionCallStatement(AFunctionCallStatement node)
+        public override void OutAFunctionCallStatement(AFunctionCallStatement node)
         {
-            base.InAFunctionCallStatement(node);
+            Definition idDef;
+
+            if (!GlobalSymbolTable.TryGetValue(node.GetFuncname().Text, out idDef))
+            {
+                PrintWarning
+            }
         }
 
         // --------------------------------------
         // function declaration statement
         // --------------------------------------
-        public override void OutAWithPromiseFunctionDeclarationStatement(AWithPromiseFunctionDeclarationStatement node)
+        public override void InAWithoutPromiseFunctionDeclarationStatement(AWithoutPromiseFunctionDeclarationStatement node)
         {
-            
+            Definition idDef;
+
+            if (GlobalSymbolTable.TryGetValue(node.GetFuncname().Text, out idDef))
+            {
+                PrintWarning(node.GetFuncname(), "Identifier " + node.GetFuncname().Text + " already exists!");
+            }
+            else
+            {
+                LocalSymbolTable = new Dictionary<string, Definition>();
+
+                // Register the new function definition ion the global table
+                FunctionDefinition newFuncDef = new FunctionDefinition();
+
+                newFuncDef.Name = node.GetFuncname().Text;
+                newFuncDef.parameters = new List<VariableDefinition>();
+
+                GlobalSymbolTable.Add(node.GetFuncname().Text, newFuncDef);
+            }
+        }
+
+        public override void OutAWithoutPromiseFunctionDeclarationStatement(AWithoutPromiseFunctionDeclarationStatement node)
+        {
+            LocalSymbolTable = new Dictionary<string, Definition>();
         }
 
         // --------------------------------------
