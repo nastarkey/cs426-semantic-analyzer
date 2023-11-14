@@ -491,7 +491,10 @@ namespace CS426.analysis
         // --------------------------------------
         // function call statment
         // --------------------------------------
-
+        public override void InAFunctionCallStatement(AFunctionCallStatement node)
+        {
+            base.InAFunctionCallStatement(node);
+        }
 
         // --------------------------------------
         // function declaration statement
