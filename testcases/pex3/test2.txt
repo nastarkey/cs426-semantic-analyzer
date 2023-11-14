@@ -9,5 +9,5 @@ main(){
 	x = 5;
 	y = 2;
 	z = 6;
-	foo(x, "test", z);
+	foo(x, y, "NJGAKSHGLKA:SJFASPKGlasdzjfgsaedgh;lkjasdjghkpal;");
 }

@@ -487,7 +487,7 @@ namespace CS426.analysis
         // --------------------------------------
         // parameters
         // --------------------------------------
-        public override void InAMultipleParamsParameters(AMultipleParamsParameters node)
+        public override void OutASingleParamParameters(ASingleParamParameters node)
         {
             Definition tempDef;
 
@@ -501,29 +501,15 @@ namespace CS426.analysis
             }
         }
 
-        public override void OutASingleParamParameters(ASingleParamParameters node)
+        public override void OutAMultipleParamsParameters(AMultipleParamsParameters node)
         {
             Definition tempDef;
 
             if (DecoratedParseTree.TryGetValue(node.GetOrExp(), out tempDef))
             {
                 tempParams.Add(tempDef);
-                //make sure there is the same number of params
-                if (tempParams.Count != tempFuncParams.Count)
-                {
-                    Console.WriteLine("Number of params provided does not match function definition");
-                }
-                for (int i = 0; i < tempParams.Count; i++)
-                {
-                    if (!LocalSymbolTable.TryGetValue(tempParams[i].Name, out tempDef) && !GlobalSymbolTable.TryGetValue(tempParams[i].Name, out tempDef))
-                    {
-                        Console.WriteLine("Parameter " + tempParams[i].Name + " not defined");
 
-                    } else if (!(tempParams[i] is TypeDefinition) || !(tempParams[i].GetType() == tempDef.GetType()))
-                    {
-                        Console.WriteLine("Parameter " + tempParams[i] + " is an incorrect type");
-                    }
-                }
+                
             }
         }
 
@@ -635,6 +621,7 @@ namespace CS426.analysis
         public override void OutAFunctionCallStatement(AFunctionCallStatement node)
         {
             Definition idDef;
+            Definition tempDef;
 
             if (!GlobalSymbolTable.TryGetValue(node.GetFuncname().Text, out idDef))
             {
@@ -646,7 +633,28 @@ namespace CS426.analysis
             }
             else
             {
-                // handled in params
+                //make sure there is the same number of params
+                if (tempParams.Count != tempFuncParams.Count)
+                {
+                    PrintWarning(node.GetFuncname(), "Expected " + )
+                    Console.WriteLine("Number of params provided does not match function definition");
+                }
+                else
+                {
+                    for (int i = 0; i < tempParams.Count; i++)
+                    {
+                        if (!LocalSymbolTable.TryGetValue(tempParams[i].Name, out tempDef) && !GlobalSymbolTable.TryGetValue(tempParams[i].Name, out tempDef))
+                        {
+                            Console.WriteLine("Parameter " + tempParams[i].Name + " not defined");
+
+                        }
+                        else if (!(tempParams[i] is TypeDefinition) || !(tempParams[i].GetType() == tempDef.GetType()))
+                        {
+                            Console.WriteLine("Parameter " + tempParams[i] + " is an incorrect type");
+                        }
+                    }
+                }
+                
             }
         }
 
