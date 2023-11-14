@@ -330,7 +330,25 @@ namespace CS426.analysis
             }
         }
 
+        public override void OutALtCompExpLtgt(ALtCompExpLtgt node)
+        {
+            
+        }
 
+        public override void OutAGtCompExpLtgt(AGtCompExpLtgt node)
+        {
+            
+        }
+
+        public override void OutALteCompExpLtgt(ALteCompExpLtgt node)
+        {
+            
+        }
+
+        public override void OutAGteCompExpLtgt(AGteCompExpLtgt node)
+        {
+            
+        }
 
         // --------------------------------------
         // comp exp eq
@@ -347,6 +365,16 @@ namespace CS426.analysis
             {
                 DecoratedParseTree.Add(node, compexpltgtDef);
             }
+        }
+
+        public override void OutAEqCompExpEq(AEqCompExpEq node)
+        {
+            
+        }
+
+        public override void OutANeqCompExpEq(ANeqCompExpEq node)
+        {
+            
         }
 
 
@@ -368,7 +396,10 @@ namespace CS426.analysis
             }
         }
 
-
+        public override void OutANotNotExp(ANotNotExp node)
+        {
+            
+        }
 
         // --------------------------------------
         //  and exp
@@ -387,7 +418,10 @@ namespace CS426.analysis
             }
         }
 
-
+        public override void OutAAndAndExp(AAndAndExp node)
+        {
+            
+        }
 
         // --------------------------------------
         //  or exp
@@ -406,26 +440,45 @@ namespace CS426.analysis
             }
         }
 
+        public override void OutAOrOrExp(AOrOrExp node)
+        {
+            
+        }
+
+
+
         // --------------------------------------
         // while statement
         // --------------------------------------
-
+        public override void OutAWhileStatement(AWhileStatement node)
+        {
+            
+        }
 
 
         // --------------------------------------
         // else statement
         // --------------------------------------
-
+        public override void OutAElseStatement(AElseStatement node)
+        {
+            
+        }
 
         // --------------------------------------
         // elif statement
         // --------------------------------------
-
+        public override void OutAElifStatement(AElifStatement node)
+        {
+            
+        }
 
         // --------------------------------------
         // if statement
         // --------------------------------------
-
+        public override void OutAIfStatement(AIfStatement node)
+        {
+            
+        }
 
         // --------------------------------------
         // assign statement
@@ -434,8 +487,13 @@ namespace CS426.analysis
         {
             Definition idDef;
             Definition expDef;
+            Definition constDef;
 
-            if (!LocalSymbolTable.TryGetValue(node.GetId().Text, out idDef))
+            if (GlobalSymbolTable.TryGetValue(node.GetId().Text, out constDef))
+            {
+                PrintWarning(node.GetId(), "Cannot assign value to a constant");
+            }
+            else if (!LocalSymbolTable.TryGetValue(node.GetId().Text, out idDef))
             {
                 PrintWarning(node.GetId(), "Identifier " + node.GetId().Text + " does not exist!");
             }
@@ -617,7 +675,6 @@ namespace CS426.analysis
             }
         }
 
-
         public override void OutAFunctionCallStatement(AFunctionCallStatement node)
         {
             Definition idDef;
@@ -686,8 +743,6 @@ namespace CS426.analysis
             }
         }
 
-
-
         public override void OutAWithoutPromiseFunctionDeclarationStatement(AWithoutPromiseFunctionDeclarationStatement node)
         {
             LocalSymbolTable = new Dictionary<string, Definition>();
@@ -732,8 +787,6 @@ namespace CS426.analysis
             }
         }
 
-
-
         public override void OutAWithPromiseFunctionDeclarationStatement(AWithPromiseFunctionDeclarationStatement node)
         {
             LocalSymbolTable = new Dictionary<string, Definition>();
@@ -754,7 +807,32 @@ namespace CS426.analysis
         // --------------------------------------
         // constant declare statment
         // --------------------------------------
+        public override void OutAConstConstantDeclareStatement(AConstConstantDeclareStatement node)
+        {
+            Definition typeDef;
+            Definition idDef;
 
+            if (!GlobalSymbolTable.TryGetValue(node.GetType().Text, out typeDef))
+            {
+                PrintWarning(node.GetType(), "Type " + node.GetType().Text + " does not exist!");
+            }
+            else if (!(typeDef is TypeDefinition))
+            {
+                PrintWarning(node.GetType(), "Identifier " + node.GetType().Text + " is not a recognized data type!");
+            }
+            else if (LocalSymbolTable.TryGetValue(node.GetVarname().Text, out idDef))
+            {
+                PrintWarning(node.GetVarname(), "Identifier " + node.GetVarname().Text + " is already being used!");
+            }
+            else
+            {
+                VariableDefinition newVarDef = new VariableDefinition();
+                newVarDef.Name = node.GetVarname().Text;
+                newVarDef.Type = (TypeDefinition)typeDef;
+
+                GlobalSymbolTable.Add(node.GetVarname().Text, newVarDef);
+            }
+        }
 
         // --------------------------------------
         // declare statement
