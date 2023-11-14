@@ -9,5 +9,6 @@ main(){
 	x = 5;
 	y = 2;
 	z = 6;
-	foo(x, y, "NJGAKSHGLKA:SJFASPKGlasdzjfgsaedgh;lkjasdjghkpal;");
+	string xyz = "xyz";
+	foo(x, y, xyz);
 }

@@ -636,8 +636,7 @@ namespace CS426.analysis
                 //make sure there is the same number of params
                 if (tempParams.Count != tempFuncParams.Count)
                 {
-                    PrintWarning(node.GetFuncname(), "Expected " + )
-                    Console.WriteLine("Number of params provided does not match function definition");
+                    PrintWarning(node.GetFuncname(), "Expected " + tempFuncParams.Count.ToString() + " params, but was given " + tempParams.Count.ToString());
                 }
                 else
                 {
@@ -645,12 +644,12 @@ namespace CS426.analysis
                     {
                         if (!LocalSymbolTable.TryGetValue(tempParams[i].Name, out tempDef) && !GlobalSymbolTable.TryGetValue(tempParams[i].Name, out tempDef))
                         {
-                            Console.WriteLine("Parameter " + tempParams[i].Name + " not defined");
+                            PrintWarning(node.GetFuncname(), "Parameter " + tempParams[i].Name + " not defined!");
 
                         }
-                        else if (!(tempParams[i] is TypeDefinition) || !(tempParams[i].GetType() == tempDef.GetType()))
+                        else if (tempParams[i].Name != tempFuncParams[i].Type.Name)
                         {
-                            Console.WriteLine("Parameter " + tempParams[i] + " is an incorrect type");
+                            PrintWarning(node.GetFuncname(), "Parameter (" + i.ToString() + ") " + tempParams[i].Name + " is an incorrect type, should be " + tempFuncParams[i].Type.Name + "!");
                         }
                     }
                 }
