@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,7 @@ namespace CS426.analysis
 
         // High scope temporary array fopr formal params
         private List<VariableDefinition> tempFormalDeclarations = new List<VariableDefinition>();
+        private List<Definition> tempParams = new List<Definition>();
 
         public override void InAProgram(AProgram node)
         {
@@ -484,7 +486,39 @@ namespace CS426.analysis
         // --------------------------------------
         // parameters
         // --------------------------------------
+        public override void InAMultipleParamsParameters(AMultipleParamsParameters node)
+        {
+            Definition tempDef;
 
+            if (DecoratedParseTree.TryGetValue(node.GetOrExp(), out tempDef))
+            {
+                tempParams.Add(tempDef);
+            } else
+            {
+                // Nothing?
+            }
+        }
+
+        public override void OutASingleParamParameters(ASingleParamParameters node)
+        {
+            Definition tempDef;
+
+            if (DecoratedParseTree.TryGetValue(node.GetOrExp(), out tempDef))
+            {
+                tempParams.Add(tempDef);
+                for (int i = 0; i < tempParams.Count; i++)
+                {
+                    if (!LocalSymbolTable.TryGetValue(tempParams[i].Name, out tempDef) && !GlobalSymbolTable.TryGetValue(tempParams[i].Name, out tempDef))
+                    {
+                        Console.WriteLine("Parameter " + tempParams[i].Name + " not defined");
+
+                    } else if (!(tempParams[i] is TypeDefinition) || !(tempParams.GetType() == tempDef.GetType()))
+                    {
+                        Console.WriteLine("Parameter " + tempParams[i].Name + " is an incoirrect type");
+                    }
+                }
+            }
+        }
 
         // --------------------------------------
         // formal parameters
@@ -543,7 +577,7 @@ namespace CS426.analysis
 
                 for (int i = 0; i < tempFormalDeclarations.Count; i++)
                 {
-                    Console.WriteLine(tempFormalDeclarations[i].Name + " " + node.GetParam().Text);
+                    // Console.WriteLine(tempFormalDeclarations[i].Name + " " + node.GetParam().Text);
                     if (tempFormalDeclarations[i].Name == node.GetParam().Text)
                     {
                         PrintWarning(node.GetParam(), node.GetParam().Text + " has already been declared as a parameter.");
@@ -579,13 +613,22 @@ namespace CS426.analysis
         // --------------------------------------
         // function call statment
         // --------------------------------------
+
         public override void OutAFunctionCallStatement(AFunctionCallStatement node)
         {
             Definition idDef;
 
             if (!GlobalSymbolTable.TryGetValue(node.GetFuncname().Text, out idDef))
             {
-                //PrintWarning
+                PrintWarning(node.GetFuncname(), "Identifier " + node.GetFuncname().Text + " does not exist");
+            }
+            else if (!(idDef is FunctionDefinition)) 
+            {
+                PrintWarning(node.GetFuncname(), "Identifier " + node.GetFuncname().Text + " is not a function");
+            }
+            else
+            {
+                // handled in params
             }
         }
 
@@ -628,9 +671,54 @@ namespace CS426.analysis
             if (GlobalSymbolTable.TryGetValue(node.GetFuncname().Text, out newFuncDef))
             {
                 ((FunctionDefinition)newFuncDef).parameters = tempFormalDeclarations;
+                GlobalSymbolTable[newFuncDef.Name] = newFuncDef;
             }
 
-            GlobalSymbolTable[newFuncDef.Name] = newFuncDef;
+        }
+
+        public override void InAWithPromiseFunctionDeclarationStatement(AWithPromiseFunctionDeclarationStatement node)
+        {
+            Definition idDef;
+            Definition typeDef;
+
+            if (GlobalSymbolTable.TryGetValue(node.GetFuncname().Text, out idDef))
+            {
+                PrintWarning(node.GetFuncname(), "Identifier " + node.GetFuncname().Text + " already exists!");
+            } 
+            else if ( !GlobalSymbolTable.TryGetValue(node.GetType().Text, out typeDef))
+            {
+                PrintWarning(node.GetType(), "Type " + node.GetType().Text + " is not a valid type!");
+            }
+            else
+            {
+
+
+                tempFormalDeclarations = new List<VariableDefinition>();
+                LocalSymbolTable = new Dictionary<string, Definition>();
+
+                // Register the new function definition ion the global table
+                FunctionDefinition newFuncDef = new FunctionDefinition();
+
+                newFuncDef.Name = node.GetFuncname().Text;
+                newFuncDef.parameters = tempFormalDeclarations;
+                newFuncDef.ReturnType = (TypeDefinition)typeDef;
+
+                GlobalSymbolTable.Add(node.GetFuncname().Text, newFuncDef);
+            }
+        }
+
+
+
+        public override void OutAWithPromiseFunctionDeclarationStatement(AWithPromiseFunctionDeclarationStatement node)
+        {
+            LocalSymbolTable = new Dictionary<string, Definition>();
+            Definition newFuncDef;
+
+            if (GlobalSymbolTable.TryGetValue(node.GetFuncname().Text, out newFuncDef))
+            {
+                ((FunctionDefinition)newFuncDef).parameters = tempFormalDeclarations;
+                GlobalSymbolTable[newFuncDef.Name] = newFuncDef;
+            }
         }
 
         // --------------------------------------

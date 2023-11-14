@@ -1,10 +1,10 @@
-foo(int x, int y) {
-	int x;
+foo(int x, int y, int z):int {
+	int w;
 }
 
 main(){
-	int x = 5;
+	int x;
 	int y;
-	x = 5 * "h";
-	y = "h" * 5;
+	int z;
+	foo(x, "test", z);
 }
