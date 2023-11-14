@@ -23,6 +23,7 @@ namespace CS426.analysis
         // High scope temporary array fopr formal params
         private List<VariableDefinition> tempFormalDeclarations = new List<VariableDefinition>();
         private List<Definition> tempParams = new List<Definition>();
+        private List<VariableDefinition> tempFuncParams = new List<VariableDefinition>();
 
         public override void InAProgram(AProgram node)
         {
@@ -507,6 +508,11 @@ namespace CS426.analysis
             if (DecoratedParseTree.TryGetValue(node.GetOrExp(), out tempDef))
             {
                 tempParams.Add(tempDef);
+                //make sure there is the same number of params
+                if (tempParams.Count != tempFuncParams.Count)
+                {
+                    Console.WriteLine("Number of params provided does not match function definition");
+                }
                 for (int i = 0; i < tempParams.Count; i++)
                 {
                     if (!LocalSymbolTable.TryGetValue(tempParams[i].Name, out tempDef) && !GlobalSymbolTable.TryGetValue(tempParams[i].Name, out tempDef))
@@ -614,6 +620,17 @@ namespace CS426.analysis
         // --------------------------------------
         // function call statment
         // --------------------------------------
+
+        public override void InAFunctionCallStatement(AFunctionCallStatement node)
+        {
+            // store function param list temporarily for param checks
+            Definition funcDef;
+            if (GlobalSymbolTable.TryGetValue(node.GetFuncname().Text, out funcDef))
+            {
+                tempFuncParams = ((FunctionDefinition)funcDef).parameters;
+            }
+        }
+
 
         public override void OutAFunctionCallStatement(AFunctionCallStatement node)
         {
