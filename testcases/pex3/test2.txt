@@ -1,4 +1,6 @@
 main(){
-	int x = 5;
-	string y = 165;
+	int x;
+	int y;
+	x = 5 * "h";
+	y = "h" * 5;
 }

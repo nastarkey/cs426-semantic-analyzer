@@ -196,19 +196,10 @@ namespace CS426.analysis
             {
                 PrintWarning(node.GetMult(), "Only a number can be multiplied!");
             }
-            else if (exp1Def is NumberDefinition)
+            
+            else if (exp1Def.GetType() != exp2Def.GetType()) 
             {
-                if (exp2Def is DoubleDefinition)
-                {
-                    PrintWarning(node.GetMult(), "Can only multiply same types!");
-                }
-            }
-            else if (exp1Def is DoubleDefinition)
-            {
-                if (exp2Def is NumberDefinition)
-                {
-                    PrintWarning(node.GetMult(), "Can only multiply same types!");
-                }
+                PrintWarning(node.GetMult(), "Cannot multiply " + exp1Def.Name + " by " + exp2Def.Name);
             }
             else
             {
@@ -232,20 +223,10 @@ namespace CS426.analysis
             {
                 PrintWarning(node.GetDiv(), "Only a number can be divided!");
             }
-            //only same types
-            else if (exp1Def is NumberDefinition)
+
+            else if (exp1Def.GetType() != exp2Def.GetType())
             {
-                if (exp2Def is DoubleDefinition)
-                {
-                    PrintWarning(node.GetDiv(), "Can only divide same types!");
-                }
-            }
-            else if (exp1Def is DoubleDefinition)
-            {
-                if (exp2Def is NumberDefinition)
-                {
-                    PrintWarning(node.GetDiv(), "Can only divide same types!");
-                }
+                PrintWarning(node.GetDiv(), "Cannot divide " + exp1Def.Name + " by " + exp2Def.Name);
             }
             else
             {
@@ -535,7 +516,10 @@ namespace CS426.analysis
         // --------------------------------------
         // function declaration statement
         // --------------------------------------
-
+        public override void OutAWithPromiseFunctionDeclarationStatement(AWithPromiseFunctionDeclarationStatement node)
+        {
+            
+        }
 
         // --------------------------------------
         // main function call
@@ -601,6 +585,14 @@ namespace CS426.analysis
             {
                 PrintWarning(node.GetType(), "Variable type and expression type don't match");
             }
+            else
+            {
+                VariableDefinition newVarDef = new VariableDefinition();
+                newVarDef.Name = node.GetVarname().Text;
+                newVarDef.Type = (TypeDefinition)typeDef;
+
+                LocalSymbolTable.Add(node.GetVarname().Text, newVarDef);
+            }
         }
 
         public override void OutAAssignFunctionDeclareStatement(AAssignFunctionDeclareStatement node)
@@ -627,7 +619,14 @@ namespace CS426.analysis
             {
                 PrintWarning(node.GetType(), "Variable type and function type don't match");
             }
+            else
+            {
+                VariableDefinition newVarDef = new VariableDefinition();
+                newVarDef.Name = node.GetVarname().Text;
+                newVarDef.Type = (TypeDefinition)typeDef;
 
+                LocalSymbolTable.Add(node.GetVarname().Text, newVarDef);
+            }
         }
 
 
