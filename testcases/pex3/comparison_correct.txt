@@ -1,0 +1,23 @@
+main(){
+	if (not (x != 3)){
+		y = x;
+	}
+	if (not (x == 3)){
+		y = x;
+	}
+	else{
+		y = x;
+	}
+	if (not (x <= 3)){
+		y = x;
+	}
+	if (not (x > 3)){
+		y = x;
+	}
+	if (not (x < 3)){
+		y = x;
+	}
+	if ( (x == y) and ( y > 3)){
+		x = 3;
+	}
+}

@@ -1,0 +1,11 @@
+foo(int x, int y){
+	x = y;
+}
+main(){
+	int x;
+	int y;
+	x = 5;
+	y = 1;
+	foo(x, "Nathan");
+	foo(y);
+}

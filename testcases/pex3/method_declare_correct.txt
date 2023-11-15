@@ -2,12 +2,8 @@ foo(int x, double y, string name){
 	x = 5 + x;
 }
 
-foo(string name){
+foo2(string name){
 	name = "Nathan";
-}
-
-foo2(cat x){
-	x = 5;
 }
 
 main(){

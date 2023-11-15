@@ -1,0 +1,9 @@
+const int TOTAL = 5;
+main(){
+	int x;
+	double y;
+	string z;
+	z = "Nathan";
+	x = 5;
+	y = 7.5;
+}
