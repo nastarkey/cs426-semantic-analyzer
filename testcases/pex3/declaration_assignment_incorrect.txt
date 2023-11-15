@@ -1,0 +1,39 @@
+﻿main() {
+cat a;
+dog b;
+fish c;
+int thiswillbeadouble; /w no error here, yet
+double thiswillbeanint; /w no error here
+
+a = 1;
+b = -1;
+c = 0;
+thiswillbeadouble = -2.5;
+thiswillbeanint = 1;
+
+double e;
+double f;
+double g;
+
+e = -1;
+f = 1;
+g = "this shouldnt work";
+
+string i;
+string j;
+string k;
+string l;
+string m;
+
+i = 1;
+j = -1;
+k = 0.5;
+l = 1.5;
+m = hello;
+
+
+vardoesnotexist = 1;
+vardoesnotexist2 = 1.5;
+vardoesnotexist3 = -2;
+vardoesnotexist4 = "error?";
+}

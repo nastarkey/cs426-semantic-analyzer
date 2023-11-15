@@ -1,0 +1,64 @@
+﻿main() {
+	int a;
+	int b;
+	a = 1;
+	b = 2;
+
+	if (a > b) {
+		a = 1;
+	}
+
+	if (a < b) {
+		a = 1;
+	}
+
+	if (a >= b) {
+		a = 1;
+	}
+
+	if (a <= b) {
+		a = 1;
+	}
+
+	if (a == b) {
+		a = 1;
+	} 
+	else 
+	{
+		a = 1;
+	}
+
+	if ((a == 1) and (b == 1)) 
+	{
+		a = 1;
+	}
+	else 
+	{
+		a = 1;
+	}
+
+	while (a > b) {
+		a = 1;
+	}
+
+	while (a < b) {
+		a = 1;
+	}
+
+	while (a >= b) {
+		a = 1;
+	}
+
+	while (a <= b) {
+		a = 1;
+	}
+
+	while (a == b) {
+		a = 1;
+	} 
+
+	while ((a == 1) and (b == 1)) 
+	{
+		a = 1;
+	}
+}

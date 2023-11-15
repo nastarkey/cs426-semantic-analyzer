@@ -1,0 +1,21 @@
+﻿const int a = 1;
+const int b = -1;
+const int c = 0;
+const int d = c;
+
+const double e = -0.1;
+const double f = 1.0123;
+const double g = 0.0;
+const double h = g;
+
+const string i = "nathan";
+const string j = "KAYLEB";
+const string k = "this one has spaces";
+const string l = "123456789";
+const string m = "";
+const string n = m;
+
+
+main() {
+int a;
+}

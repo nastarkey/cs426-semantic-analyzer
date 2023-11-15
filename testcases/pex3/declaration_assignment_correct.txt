@@ -1,0 +1,33 @@
+﻿main() {
+int a;
+int b;
+int c;
+int d;
+
+a = 1;
+b = -1;
+c = 0;
+d = 200;
+
+double e;
+double f;
+double g;
+double h;
+
+e = -0.1;
+f = 1.0123;
+g = 0.0;
+h = 0.5;
+
+string i;
+string j;
+string k;
+string l;
+string m;
+
+i = "nathan";
+j = "KAYLEB";
+k = "this one has spaces";
+l = "123456789";
+m = "";
+}

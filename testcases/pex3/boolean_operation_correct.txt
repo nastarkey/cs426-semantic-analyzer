@@ -1,0 +1,86 @@
+﻿main() {
+	int a;
+	int b;
+	a = 1;
+	b = 2;
+
+	if (a > b) {
+		a = 1;
+	}
+
+	if (a < b) {
+		a = 1;
+	}
+
+	if (a >= b) {
+		a = 1;
+	}
+
+	if (a <= b) {
+		a = 1;
+	}
+
+	if (a == b) {
+		a = 1;
+	}
+
+	if (a != b) {
+		a = 1;
+	}
+
+	if (a == 2) {
+		a = 1;
+	}
+
+	if (2 != b) {
+		a = 1;
+	}
+
+	if (not (a > b)) {
+		a = 1;
+	}
+
+	if (not (1 > 2)) {
+		a = 1;
+	}
+
+	if (not (1 == 2)) {
+		a = 1;
+	}
+
+	if (not ((1 + 1) == 2)) {
+		a = 1;
+	}
+
+	if (not (a >= b)) {
+		a = 1;
+	}
+
+	if (not (a <= b)) {
+		a = 1;
+	}
+
+	if (not (a == b)) {
+		a = 1;
+	}
+
+	if (not (a != b)) {
+		a = 1;
+	}
+
+	if (not (a != b) and (a == b)) {
+		a = 1;
+	}
+
+	if (not (a != b) or (a == b)) {
+		a = 1;
+	}
+
+	if (not (a != b) or not (b == a)) {
+		a = 1;
+	}
+
+	if (not (a != b)) {
+		a = 1;
+	}
+}

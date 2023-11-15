@@ -1,0 +1,21 @@
+﻿const cat a =  1;
+const dog b =  -1;
+const fish c =  0;
+const int thiswillbeadouble =  -2.5;
+
+const double e = -1;
+const double f = 1;
+const double g = "this shouldnt work";
+
+const string h = hello;
+const string i = 1;
+const string j = -1;
+const string k = 0.5;
+const string l = 1.5;
+const string m = "No error here";
+const string m = "But hopefully here";
+
+main() {
+int a;
+m = "And certainly here";
+}

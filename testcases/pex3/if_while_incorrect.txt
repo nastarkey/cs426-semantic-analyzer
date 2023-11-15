@@ -1,0 +1,58 @@
+﻿main() {
+	int a;
+	double b;
+	a = 1;
+	b = 1.0;
+
+	/w how do you mess up an if statement semantically?
+	if (1) 
+	{
+		a = 1;
+	}
+	
+	if (a) 
+	{
+		a = 1;
+	}
+	
+	if (b) 
+	{
+		a = 1;
+	}
+	
+	if ("true") 
+	{
+		a = 1;
+	}
+	
+	if (1.5) 
+	{
+		a = 1;
+	}
+
+	while (1) 
+	{
+		a = 1;
+	}
+	
+	while (a) 
+	{
+		a = 1;
+	}
+	
+	while (b) 
+	{
+		a = 1;
+	}
+	
+	while ("true") 
+	{
+		a = 1;
+	}
+	
+	while (1.5) 
+	{
+		a = 1;
+	}
+
+}
