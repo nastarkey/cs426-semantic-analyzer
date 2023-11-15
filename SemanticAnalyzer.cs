@@ -193,9 +193,12 @@ namespace CS426.analysis
             Definition exp2Def;
             Definition exp1Def;
 
-            DecoratedParseTree.TryGetValue(node.GetExp1(), out exp1Def);
+            if (!DecoratedParseTree.TryGetValue(node.GetExp1(), out exp1Def))
+            {
+                //Higher level error
+            }
             // see if it is already in tree like above
-            if (!DecoratedParseTree.TryGetValue(node.GetExp2(), out exp2Def))
+            else if (!DecoratedParseTree.TryGetValue(node.GetExp2(), out exp2Def))
             {
                 //Error would be printed at lower level
             }
@@ -220,9 +223,12 @@ namespace CS426.analysis
             Definition exp2Def;
             Definition exp1Def;
 
-            DecoratedParseTree.TryGetValue(node.GetExp1(), out exp1Def);
+            if (!DecoratedParseTree.TryGetValue(node.GetExp1(), out exp1Def))
+            {
+                //Higher level error
+            }
             // see if it is already in tree like above
-            if (!DecoratedParseTree.TryGetValue(node.GetExp2(), out exp2Def))
+            else if (!DecoratedParseTree.TryGetValue(node.GetExp2(), out exp2Def))
             {
                 //Error would be printed at lower level
             }
@@ -1170,6 +1176,7 @@ namespace CS426.analysis
             Definition typeDef;
             Definition idDef;
             Definition constDef;
+            Definition valDef;
 
             if (!GlobalSymbolTable.TryGetValue(node.GetType().Text, out typeDef))
             {
@@ -1186,6 +1193,14 @@ namespace CS426.analysis
             else if (GlobalSymbolTable.TryGetValue(node.GetVarname().Text, out constDef))
             {
                 PrintWarning(node.GetVarname(), "Identifier " + node.GetVarname().Text + " is already being used!");
+            }
+            else if (!DecoratedParseTree.TryGetValue(node.GetOrExp(), out valDef))
+            {
+                //Higher order error
+            }
+            else if (valDef.Name != typeDef.Name)
+            {
+                PrintWarning(node.GetType(), "Variable type " + typeDef.Name + " and expression type " + valDef.Name + " don't match.");
             }
             else
             {
