@@ -72,7 +72,7 @@ Productions
 
 	statements = {multiple} statement statements | {single} ;
 	statement = {declaration} declare_statement | {assignment} assign_statement | {call} function_call_statement
-	| {main} main_function_call | {if_stmt} if_statement | {elif_stmt} elif_statement | {else_stmt} else_statement 
+	| {main} main_function_call | {if_stmt} if_statement | {else_stmt} else_statement 
 	| {while_stmt} while_statement | {func_declaration} function_declaration_statement;
 
 	declare_statement = {no_assign} [type]:id [varname]:id eol 
@@ -95,14 +95,13 @@ Productions
 	assign_statement = {value} id assign or_exp eol | {function} id assign function_call_statement;
 
 	if_statement = if left_parenthesis or_exp right_parenthesis open_brace statements close_brace;
-	elif_statement = elif left_parenthesis or_exp right_parenthesis open_brace statements close_brace;
-	else_statement = else open_brace statements close_brace;
+	else_statement = if left_parenthesis or_exp right_parenthesis [one]:open_brace [onetwoo]:statements [onetwo]:close_brace else open_brace statements close_brace;
 	while_statement = while left_parenthesis or_exp right_parenthesis open_brace statements close_brace;
 
 
 	or_exp = {or} or_exp or and_exp | {pass} and_exp;
 	and_exp = {and} and_exp and not_exp | {pass} not_exp;
-	not_exp = {not} not_exp not comp_exp_eq | {pass} comp_exp_eq;
+	not_exp = {not} not comp_exp_eq | {pass} comp_exp_eq;
 	comp_exp_eq = {eq} [left]:exp0 eq [right]:exp0 
 	| {neq} [left]:exp0 neq [right]:exp0
 	| {pass} comp_exp_ltgt;

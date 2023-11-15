@@ -23,7 +23,6 @@ public interface Analysis : Switch
     void CaseACallStatement(ACallStatement node);
     void CaseAMainStatement(AMainStatement node);
     void CaseAIfStmtStatement(AIfStmtStatement node);
-    void CaseAElifStmtStatement(AElifStmtStatement node);
     void CaseAElseStmtStatement(AElseStmtStatement node);
     void CaseAWhileStmtStatement(AWhileStmtStatement node);
     void CaseAFuncDeclarationStatement(AFuncDeclarationStatement node);
@@ -43,7 +42,6 @@ public interface Analysis : Switch
     void CaseAValueAssignStatement(AValueAssignStatement node);
     void CaseAFunctionAssignStatement(AFunctionAssignStatement node);
     void CaseAIfStatement(AIfStatement node);
-    void CaseAElifStatement(AElifStatement node);
     void CaseAElseStatement(AElseStatement node);
     void CaseAWhileStatement(AWhileStatement node);
     void CaseAOrOrExp(AOrOrExp node);
@@ -207,10 +205,6 @@ public class AnalysisAdapter : Analysis
     {
         DefaultCase(node);
     }
-    public virtual void CaseAElifStmtStatement(AElifStmtStatement node)
-    {
-        DefaultCase(node);
-    }
     public virtual void CaseAElseStmtStatement(AElseStmtStatement node)
     {
         DefaultCase(node);
@@ -284,10 +278,6 @@ public class AnalysisAdapter : Analysis
         DefaultCase(node);
     }
     public virtual void CaseAIfStatement(AIfStatement node)
-    {
-        DefaultCase(node);
-    }
-    public virtual void CaseAElifStatement(AElifStatement node)
     {
         DefaultCase(node);
     }
@@ -755,25 +745,6 @@ public class DepthFirstAdapter : AnalysisAdapter
             node.GetIfStatement().Apply(this);
         }
         OutAIfStmtStatement(node);
-    }
-    public virtual void InAElifStmtStatement(AElifStmtStatement node)
-    {
-        DefaultIn(node);
-    }
-
-    public virtual void OutAElifStmtStatement(AElifStmtStatement node)
-    {
-        DefaultOut(node);
-    }
-
-    public override void CaseAElifStmtStatement(AElifStmtStatement node)
-    {
-        InAElifStmtStatement(node);
-        if(node.GetElifStatement() != null)
-        {
-            node.GetElifStatement().Apply(this);
-        }
-        OutAElifStmtStatement(node);
     }
     public virtual void InAElseStmtStatement(AElseStmtStatement node)
     {
@@ -1376,49 +1347,6 @@ public class DepthFirstAdapter : AnalysisAdapter
         }
         OutAIfStatement(node);
     }
-    public virtual void InAElifStatement(AElifStatement node)
-    {
-        DefaultIn(node);
-    }
-
-    public virtual void OutAElifStatement(AElifStatement node)
-    {
-        DefaultOut(node);
-    }
-
-    public override void CaseAElifStatement(AElifStatement node)
-    {
-        InAElifStatement(node);
-        if(node.GetElif() != null)
-        {
-            node.GetElif().Apply(this);
-        }
-        if(node.GetLeftParenthesis() != null)
-        {
-            node.GetLeftParenthesis().Apply(this);
-        }
-        if(node.GetOrExp() != null)
-        {
-            node.GetOrExp().Apply(this);
-        }
-        if(node.GetRightParenthesis() != null)
-        {
-            node.GetRightParenthesis().Apply(this);
-        }
-        if(node.GetOpenBrace() != null)
-        {
-            node.GetOpenBrace().Apply(this);
-        }
-        if(node.GetStatements() != null)
-        {
-            node.GetStatements().Apply(this);
-        }
-        if(node.GetCloseBrace() != null)
-        {
-            node.GetCloseBrace().Apply(this);
-        }
-        OutAElifStatement(node);
-    }
     public virtual void InAElseStatement(AElseStatement node)
     {
         DefaultIn(node);
@@ -1432,6 +1360,34 @@ public class DepthFirstAdapter : AnalysisAdapter
     public override void CaseAElseStatement(AElseStatement node)
     {
         InAElseStatement(node);
+        if(node.GetIf() != null)
+        {
+            node.GetIf().Apply(this);
+        }
+        if(node.GetLeftParenthesis() != null)
+        {
+            node.GetLeftParenthesis().Apply(this);
+        }
+        if(node.GetOrExp() != null)
+        {
+            node.GetOrExp().Apply(this);
+        }
+        if(node.GetRightParenthesis() != null)
+        {
+            node.GetRightParenthesis().Apply(this);
+        }
+        if(node.GetOne() != null)
+        {
+            node.GetOne().Apply(this);
+        }
+        if(node.GetOnetwoo() != null)
+        {
+            node.GetOnetwoo().Apply(this);
+        }
+        if(node.GetOnetwo() != null)
+        {
+            node.GetOnetwo().Apply(this);
+        }
         if(node.GetElse() != null)
         {
             node.GetElse().Apply(this);
@@ -1598,10 +1554,6 @@ public class DepthFirstAdapter : AnalysisAdapter
     public override void CaseANotNotExp(ANotNotExp node)
     {
         InANotNotExp(node);
-        if(node.GetNotExp() != null)
-        {
-            node.GetNotExp().Apply(this);
-        }
         if(node.GetNot() != null)
         {
             node.GetNot().Apply(this);
@@ -2340,25 +2292,6 @@ public class ReversedDepthFirstAdapter : AnalysisAdapter
         }
         OutAIfStmtStatement(node);
     }
-    public virtual void InAElifStmtStatement(AElifStmtStatement node)
-    {
-        DefaultIn(node);
-    }
-
-    public virtual void OutAElifStmtStatement(AElifStmtStatement node)
-    {
-        DefaultOut(node);
-    }
-
-    public override void CaseAElifStmtStatement(AElifStmtStatement node)
-    {
-        InAElifStmtStatement(node);
-        if(node.GetElifStatement() != null)
-        {
-            node.GetElifStatement().Apply(this);
-        }
-        OutAElifStmtStatement(node);
-    }
     public virtual void InAElseStmtStatement(AElseStmtStatement node)
     {
         DefaultIn(node);
@@ -2960,49 +2893,6 @@ public class ReversedDepthFirstAdapter : AnalysisAdapter
         }
         OutAIfStatement(node);
     }
-    public virtual void InAElifStatement(AElifStatement node)
-    {
-        DefaultIn(node);
-    }
-
-    public virtual void OutAElifStatement(AElifStatement node)
-    {
-        DefaultOut(node);
-    }
-
-    public override void CaseAElifStatement(AElifStatement node)
-    {
-        InAElifStatement(node);
-        if(node.GetCloseBrace() != null)
-        {
-            node.GetCloseBrace().Apply(this);
-        }
-        if(node.GetStatements() != null)
-        {
-            node.GetStatements().Apply(this);
-        }
-        if(node.GetOpenBrace() != null)
-        {
-            node.GetOpenBrace().Apply(this);
-        }
-        if(node.GetRightParenthesis() != null)
-        {
-            node.GetRightParenthesis().Apply(this);
-        }
-        if(node.GetOrExp() != null)
-        {
-            node.GetOrExp().Apply(this);
-        }
-        if(node.GetLeftParenthesis() != null)
-        {
-            node.GetLeftParenthesis().Apply(this);
-        }
-        if(node.GetElif() != null)
-        {
-            node.GetElif().Apply(this);
-        }
-        OutAElifStatement(node);
-    }
     public virtual void InAElseStatement(AElseStatement node)
     {
         DefaultIn(node);
@@ -3031,6 +2921,34 @@ public class ReversedDepthFirstAdapter : AnalysisAdapter
         if(node.GetElse() != null)
         {
             node.GetElse().Apply(this);
+        }
+        if(node.GetOnetwo() != null)
+        {
+            node.GetOnetwo().Apply(this);
+        }
+        if(node.GetOnetwoo() != null)
+        {
+            node.GetOnetwoo().Apply(this);
+        }
+        if(node.GetOne() != null)
+        {
+            node.GetOne().Apply(this);
+        }
+        if(node.GetRightParenthesis() != null)
+        {
+            node.GetRightParenthesis().Apply(this);
+        }
+        if(node.GetOrExp() != null)
+        {
+            node.GetOrExp().Apply(this);
+        }
+        if(node.GetLeftParenthesis() != null)
+        {
+            node.GetLeftParenthesis().Apply(this);
+        }
+        if(node.GetIf() != null)
+        {
+            node.GetIf().Apply(this);
         }
         OutAElseStatement(node);
     }
@@ -3189,10 +3107,6 @@ public class ReversedDepthFirstAdapter : AnalysisAdapter
         if(node.GetNot() != null)
         {
             node.GetNot().Apply(this);
-        }
-        if(node.GetNotExp() != null)
-        {
-            node.GetNotExp().Apply(this);
         }
         OutANotNotExp(node);
     }

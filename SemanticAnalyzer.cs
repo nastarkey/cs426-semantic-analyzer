@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
@@ -81,7 +82,8 @@ namespace CS426.analysis
             string varName = node.GetId().Text;
             Definition varDef;
 
-            if (!LocalSymbolTable.TryGetValue(varName, out varDef))
+
+            if (!LocalSymbolTable.TryGetValue(varName, out varDef) && !GlobalSymbolTable.TryGetValue(varName, out varDef))
             {
                 PrintWarning(node.GetId(), varName + " does not exist!");
             }
@@ -158,7 +160,7 @@ namespace CS426.analysis
                 //Error would be printed at lower level
             }
             // check to make sure it is infront of a number or double
-            else if (!(exp3Def is NumberDefinition) || !(exp3Def is DoubleDefinition))
+            else if (!(exp3Def is NumberDefinition) && !(exp3Def is DoubleDefinition))
             {
                 PrintWarning(node.GetMinus(), "Only a number can be negated!");
             }
@@ -198,7 +200,7 @@ namespace CS426.analysis
                 //Error would be printed at lower level
             }
             // check to make sure it is infront of a number or double
-            else if (!(exp2Def is NumberDefinition) || !(exp2Def is DoubleDefinition))
+            else if (!(exp2Def is NumberDefinition) && !(exp2Def is DoubleDefinition))
             {
                 PrintWarning(node.GetMult(), "Only a number can be multiplied!");
             }
@@ -225,7 +227,7 @@ namespace CS426.analysis
                 //Error would be printed at lower level
             }
             // check to make sure it is infront of a number or double
-            else if (!(exp2Def is NumberDefinition) || !(exp2Def is DoubleDefinition))
+            else if (!(exp2Def is NumberDefinition) && !(exp2Def is DoubleDefinition))
             {
                 PrintWarning(node.GetDiv(), "Only a number can be divided!");
             }
@@ -264,14 +266,17 @@ namespace CS426.analysis
             Definition exp0Def;
             Definition exp1Def;
 
-            DecoratedParseTree.TryGetValue(node.GetExp0(), out exp0Def);
+            if (!DecoratedParseTree.TryGetValue(node.GetExp0(), out exp0Def))
+            {
+                //Error would be printed at lower level
+            }
             // see if it is already in tree like above
-            if (!DecoratedParseTree.TryGetValue(node.GetExp1(), out exp1Def))
+            else if (!DecoratedParseTree.TryGetValue(node.GetExp1(), out exp1Def))
             {
                 //Error would be printed at lower level
             }
             // check to make sure it is infront of a number or double
-            else if (!(exp1Def is NumberDefinition) || !(exp1Def is DoubleDefinition))
+            else if (!(exp1Def is NumberDefinition) && !(exp1Def is DoubleDefinition))
             {
                 PrintWarning(node.GetPlus(), "Only a number can be added!");
             }
@@ -290,14 +295,17 @@ namespace CS426.analysis
             Definition exp0Def;
             Definition exp1Def;
 
-            DecoratedParseTree.TryGetValue(node.GetExp0(), out exp0Def);
-            // see if it is already in tree like above
-            if (!DecoratedParseTree.TryGetValue(node.GetExp1(), out exp1Def))
+            if (!DecoratedParseTree.TryGetValue(node.GetExp0(), out exp0Def))
             {
-                //Error would be printed at lower level
+                // Error would be printed at lower level
+            }
+            // see if it is already in tree like above
+            else if (!DecoratedParseTree.TryGetValue(node.GetExp1(), out exp1Def))
+            {
+                // Error would be printed at lower level
             }
             // check to make sure it is infront of a number or double
-            else if (!(exp1Def is NumberDefinition) || !(exp1Def is DoubleDefinition))
+            else if (!(exp1Def is NumberDefinition) && !(exp1Def is DoubleDefinition))
             {
                 PrintWarning(node.GetMinus(), "Only a number can be subtracted!");
             }
@@ -332,22 +340,206 @@ namespace CS426.analysis
 
         public override void OutALtCompExpLtgt(ALtCompExpLtgt node)
         {
-            
+            int leftDefType;
+            int rightDefType;
+            Definition leftDef;
+            Definition rightDef;
+
+            // make sure only cmp numbers
+            if (!DecoratedParseTree.TryGetValue(node.GetLeft(), out leftDef))
+            {
+                // error would be printed at lower level
+            }
+            else if (!DecoratedParseTree.TryGetValue(node.GetRight(), out rightDef))
+            {
+                // error would be printed at lower level
+            }
+            else
+            {
+                if (leftDef is NumberDefinition || leftDef is DoubleDefinition)
+                {
+                    leftDefType = leftDef is NumberDefinition? 1 : 0;
+                }
+                else
+                {
+                    PrintWarning(node.GetLt(), "Left operator is not of type int or double.");
+                    return;
+                }
+
+                if (rightDef is NumberDefinition || rightDef is DoubleDefinition)
+                {
+                    rightDefType = rightDef is NumberDefinition ? 1 : 0;
+                }
+                else
+                {
+                    PrintWarning(node.GetLt(), "Right operator is not of type int or double.");
+                    return;
+                }
+
+                if ((rightDefType + leftDefType) % 2 != 0) //idk why this works
+                {
+                    PrintWarning(node.GetLt(), "Cannot compare different types.");
+                }
+                else
+                {
+                    BooleanDefinition newDef = new BooleanDefinition();
+                    newDef.Name = leftDef.Name;
+                    DecoratedParseTree.Add(node, (Definition)newDef);
+                }
+            }
         }
 
         public override void OutAGtCompExpLtgt(AGtCompExpLtgt node)
         {
-            
+            int leftDefType;
+            int rightDefType;
+            Definition leftDef;
+            Definition rightDef;
+
+            // make sure only cmp numbers
+            if (!DecoratedParseTree.TryGetValue(node.GetLeft(), out leftDef))
+            {
+                // error would be printed at lower level
+            }
+            else if (!DecoratedParseTree.TryGetValue(node.GetRight(), out rightDef))
+            {
+                // error would be printed at lower level
+            }
+            else
+            {
+                if (leftDef is NumberDefinition || leftDef is DoubleDefinition)
+                {
+                    leftDefType = leftDef is NumberDefinition ? 1 : 0;
+                }
+                else
+                {
+                    PrintWarning(node.GetGt(), "Left operator is not of type int or double.");
+                    return;
+                }
+
+                if (rightDef is NumberDefinition || rightDef is DoubleDefinition)
+                {
+                    rightDefType = rightDef is NumberDefinition ? 1 : 0;
+                }
+                else
+                {
+                    PrintWarning(node.GetGt(), "Right operator is not of type int or double.");
+                    return;
+                }
+
+                if ((rightDefType + leftDefType) % 2 != 0) //idk why this works
+                {
+                    PrintWarning(node.GetGt(), "Cannot compare different types.");
+                }
+                else
+                {
+                    BooleanDefinition newDef = new BooleanDefinition();
+                    newDef.Name = leftDef.Name;
+                    DecoratedParseTree.Add(node, (Definition)newDef);
+                }
+            }
         }
 
         public override void OutALteCompExpLtgt(ALteCompExpLtgt node)
         {
-            
+            int leftDefType;
+            int rightDefType;
+            Definition leftDef;
+            Definition rightDef;
+
+            // make sure only cmp numbers
+            if (!DecoratedParseTree.TryGetValue(node.GetLeft(), out leftDef))
+            {
+                // error would be printed at lower level
+            }
+            else if (!DecoratedParseTree.TryGetValue(node.GetRight(), out rightDef))
+            {
+                // error would be printed at lower level
+            }
+            else
+            {
+                if (leftDef is NumberDefinition || leftDef is DoubleDefinition)
+                {
+                    leftDefType = leftDef is NumberDefinition ? 1 : 0;
+                }
+                else
+                {
+                    PrintWarning(node.GetLte(), "Left operator is not of type int or double.");
+                    return;
+                }
+
+                if (rightDef is NumberDefinition || rightDef is DoubleDefinition)
+                {
+                    rightDefType = rightDef is NumberDefinition ? 1 : 0;
+                }
+                else
+                {
+                    PrintWarning(node.GetLte(), "Right operator is not of type int or double.");
+                    return;
+                }
+
+                if ((rightDefType + leftDefType) % 2 != 0) //idk why this works
+                {
+                    PrintWarning(node.GetLte(), "Cannot compare different types.");
+                }
+                else
+                {
+                    BooleanDefinition newDef = new BooleanDefinition();
+                    newDef.Name = leftDef.Name;
+                    DecoratedParseTree.Add(node, (Definition)newDef);
+                }
+            }
         }
 
         public override void OutAGteCompExpLtgt(AGteCompExpLtgt node)
         {
-            
+            int leftDefType;
+            int rightDefType;
+            Definition leftDef;
+            Definition rightDef;
+
+            // make sure only cmp numbers
+            if (!DecoratedParseTree.TryGetValue(node.GetLeft(), out leftDef))
+            {
+                // error would be printed at lower level
+            }
+            else if (!DecoratedParseTree.TryGetValue(node.GetRight(), out rightDef))
+            {
+                // error would be printed at lower level
+            }
+            else
+            {
+                if (leftDef is NumberDefinition || leftDef is DoubleDefinition)
+                {
+                    leftDefType = leftDef is NumberDefinition ? 1 : 0;
+                }
+                else
+                {
+                    PrintWarning(node.GetGte(), "Left operator is not of type int or double.");
+                    return;
+                }
+
+                if (rightDef is NumberDefinition || rightDef is DoubleDefinition)
+                {
+                    rightDefType = rightDef is NumberDefinition ? 1 : 0;
+                }
+                else
+                {
+                    PrintWarning(node.GetGte(), "Right operator is not of type int or double.");
+                    return;
+                }
+
+                if ((rightDefType + leftDefType) % 2 != 0) //idk why this works
+                {
+                    PrintWarning(node.GetGte(), "Cannot compare different types.");
+                }
+                else
+                {
+                    BooleanDefinition newDef = new BooleanDefinition();
+                    newDef.Name = leftDef.Name;
+                    DecoratedParseTree.Add(node, (Definition)newDef);
+                }
+            }
         }
 
         // --------------------------------------
@@ -369,15 +561,105 @@ namespace CS426.analysis
 
         public override void OutAEqCompExpEq(AEqCompExpEq node)
         {
-            
+            int leftDefType;
+            int rightDefType;
+            Definition leftDef;
+            Definition rightDef;
+
+            // make sure only cmp numbers
+            if (!DecoratedParseTree.TryGetValue(node.GetLeft(), out leftDef))
+            {
+                // error would be printed at lower level
+            }
+            else if (!DecoratedParseTree.TryGetValue(node.GetRight(), out rightDef))
+            {
+                // error would be printed at lower level
+            }
+            else
+            {
+                if (leftDef is NumberDefinition || leftDef is DoubleDefinition)
+                {
+                    leftDefType = leftDef is NumberDefinition ? 1 : 0;
+                }
+                else
+                {
+                    PrintWarning(node.GetEq(), "Left operator is not of type int or double.");
+                    return;
+                }
+
+                if (rightDef is NumberDefinition || rightDef is DoubleDefinition)
+                {
+                    rightDefType = rightDef is NumberDefinition ? 1 : 0;
+                }
+                else
+                {
+                    PrintWarning(node.GetEq(), "Right operator is not of type int or double.");
+                    return;
+                }
+
+                if ((rightDefType + leftDefType) % 2 != 0) //idk why this works
+                {
+                    PrintWarning(node.GetEq(), "Cannot compare different types.");
+                }
+                else
+                {
+                    BooleanDefinition newDef = new BooleanDefinition();
+                    newDef.Name = leftDef.Name;
+                    DecoratedParseTree.Add(node, (Definition)newDef);
+                }
+            }
         }
 
         public override void OutANeqCompExpEq(ANeqCompExpEq node)
         {
-            
+            int leftDefType;
+            int rightDefType;
+            Definition leftDef;
+            Definition rightDef;
+
+            // make sure only cmp numbers
+            if (!DecoratedParseTree.TryGetValue(node.GetLeft(), out leftDef))
+            {
+                // error would be printed at lower level
+            }
+            else if (!DecoratedParseTree.TryGetValue(node.GetRight(), out rightDef))
+            {
+                // error would be printed at lower level
+            }
+            else
+            {
+                if (leftDef is NumberDefinition || leftDef is DoubleDefinition)
+                {
+                    leftDefType = leftDef is NumberDefinition ? 1 : 0;
+                }
+                else
+                {
+                    PrintWarning(node.GetNeq(), "Left operator is not of type int or double.");
+                    return;
+                }
+
+                if (rightDef is NumberDefinition || rightDef is DoubleDefinition)
+                {
+                    rightDefType = rightDef is NumberDefinition ? 1 : 0;
+                }
+                else
+                {
+                    PrintWarning(node.GetNeq(), "Right operator is not of type int or double.");
+                    return;
+                }
+
+                if ((rightDefType + leftDefType) % 2 != 0) //idk why this works
+                {
+                    PrintWarning(node.GetNeq(), "Cannot compare different types.");
+                }
+                else
+                {
+                    BooleanDefinition newDef = new BooleanDefinition();
+                    newDef.Name = leftDef.Name;
+                    DecoratedParseTree.Add(node, (Definition)newDef);
+                }
+            }
         }
-
-
 
         // --------------------------------------
         // not exp
@@ -398,7 +680,21 @@ namespace CS426.analysis
 
         public override void OutANotNotExp(ANotNotExp node)
         {
-            
+            Definition compDef;
+            Definition notDef;
+
+            if (!DecoratedParseTree.TryGetValue(node.GetCompExpEq(), out compDef))
+            {
+                // handled lower level
+            }
+            else if (!(compDef is BooleanDefinition))
+            {
+                PrintWarning(node.GetNot(), "Can only invert boolean types");
+            }
+            else
+            {
+                DecoratedParseTree.Add(node, compDef);
+            }
         }
 
         // --------------------------------------
@@ -420,7 +716,25 @@ namespace CS426.analysis
 
         public override void OutAAndAndExp(AAndAndExp node)
         {
-            
+            Definition andDef;
+            Definition notDef;
+
+            if (!DecoratedParseTree.TryGetValue(node.GetAndExp(), out andDef))
+            {
+                // handled lower level
+            }
+            else if (!DecoratedParseTree.TryGetValue(node.GetNotExp(), out notDef))
+            {
+                // handled lower level
+            }
+            else if (!(notDef is BooleanDefinition) && !(andDef is DoubleDefinition))
+            {
+                PrintWarning(node.GetAnd(), "Can only union boolean types");
+            }
+            else
+            {
+                DecoratedParseTree.Add(node, andDef);
+            }
         }
 
         // --------------------------------------
@@ -442,17 +756,42 @@ namespace CS426.analysis
 
         public override void OutAOrOrExp(AOrOrExp node)
         {
-            
+            Definition andDef;
+            Definition orDef;
+
+            if (!DecoratedParseTree.TryGetValue(node.GetAndExp(), out andDef))
+            {
+                // handled lower level
+            }
+            else if (!DecoratedParseTree.TryGetValue(node.GetOrExp(), out orDef))
+            {
+                // handled lower level
+            }
+            else if (!(orDef is BooleanDefinition) && !(andDef is DoubleDefinition))
+            {
+                PrintWarning(node.GetOr(), "Can only or boolean types");
+            }
+            else
+            {
+                DecoratedParseTree.Add(node, andDef);
+            }
         }
-
-
 
         // --------------------------------------
         // while statement
         // --------------------------------------
         public override void OutAWhileStatement(AWhileStatement node)
         {
-            
+            Definition orExp;
+
+            if (!DecoratedParseTree.TryGetValue(node.GetOrExp(), out orExp))
+            {
+                // handled earlier
+            }
+            else if ( !(orExp is BooleanDefinition))
+            {
+                PrintWarning(node.GetWhile(), "Expression must be boolean for a while loop");
+            }
         }
 
 
@@ -461,23 +800,41 @@ namespace CS426.analysis
         // --------------------------------------
         public override void OutAElseStatement(AElseStatement node)
         {
-            
+            Definition orExp;
+
+            if (!DecoratedParseTree.TryGetValue(node.GetOrExp(), out orExp))
+            {
+                // handled earlier
+            }
+            else if ( !(orExp is BooleanDefinition))
+            {
+                PrintWarning(node.GetElse(), "Expression must be boolean for a while loop");
+            }
         }
 
         // --------------------------------------
         // elif statement
         // --------------------------------------
-        public override void OutAElifStatement(AElifStatement node)
-        {
-            
-        }
+        //public override void OutAElifStatement(AElifStatement node)
+        //{
+        //    // depreciated
+        //}
 
         // --------------------------------------
         // if statement
         // --------------------------------------
         public override void OutAIfStatement(AIfStatement node)
         {
-            
+            Definition orExp;
+
+            if (!DecoratedParseTree.TryGetValue(node.GetOrExp(), out orExp))
+            {
+                // handled earlier
+            }
+            else if (!(orExp is BooleanDefinition))
+            {
+                PrintWarning(node.GetIf(), "Expression must be boolean for a while loop");
+            }
         }
 
         // --------------------------------------
@@ -672,6 +1029,7 @@ namespace CS426.analysis
             if (GlobalSymbolTable.TryGetValue(node.GetFuncname().Text, out funcDef))
             {
                 tempFuncParams = ((FunctionDefinition)funcDef).parameters;
+                tempFuncParams.Reverse();
             }
         }
 
@@ -811,6 +1169,7 @@ namespace CS426.analysis
         {
             Definition typeDef;
             Definition idDef;
+            Definition constDef;
 
             if (!GlobalSymbolTable.TryGetValue(node.GetType().Text, out typeDef))
             {
@@ -821,6 +1180,10 @@ namespace CS426.analysis
                 PrintWarning(node.GetType(), "Identifier " + node.GetType().Text + " is not a recognized data type!");
             }
             else if (LocalSymbolTable.TryGetValue(node.GetVarname().Text, out idDef))
+            {
+                PrintWarning(node.GetVarname(), "Identifier " + node.GetVarname().Text + " is already being used!");
+            }
+            else if (GlobalSymbolTable.TryGetValue(node.GetVarname().Text, out constDef))
             {
                 PrintWarning(node.GetVarname(), "Identifier " + node.GetVarname().Text + " is already being used!");
             }

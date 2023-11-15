@@ -56,10 +56,6 @@ public abstract class PIfStatement : Node
 {
 }
 
-public abstract class PElifStatement : Node
-{
-}
-
 public abstract class PElseStatement : Node
 {
 }
@@ -875,84 +871,6 @@ public sealed class AIfStmtStatement : PStatement
         if ( _if_statement_ == oldChild )
         {
             SetIfStatement ((PIfStatement) newChild);
-            return;
-        }
-    }
-
-}
-public sealed class AElifStmtStatement : PStatement
-{
-    private PElifStatement _elif_statement_;
-
-    public AElifStmtStatement ()
-    {
-    }
-
-    public AElifStmtStatement (
-            PElifStatement _elif_statement_
-    )
-    {
-        SetElifStatement (_elif_statement_);
-    }
-
-    public override Object Clone()
-    {
-        return new AElifStmtStatement (
-            (PElifStatement)CloneNode (_elif_statement_)
-        );
-    }
-
-    public override void Apply(Switch sw)
-    {
-        ((Analysis) sw).CaseAElifStmtStatement(this);
-    }
-
-    public PElifStatement GetElifStatement ()
-    {
-        return _elif_statement_;
-    }
-
-    public void SetElifStatement (PElifStatement node)
-    {
-        if(_elif_statement_ != null)
-        {
-            _elif_statement_.Parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.Parent() != null)
-            {
-                node.Parent().RemoveChild(node);
-            }
-
-            node.Parent(this);
-        }
-
-        _elif_statement_ = node;
-    }
-
-    public override string ToString()
-    {
-        return ""
-            + ToString (_elif_statement_)
-        ;
-    }
-
-    internal override void RemoveChild(Node child)
-    {
-        if ( _elif_statement_ == child )
-        {
-            _elif_statement_ = null;
-            return;
-        }
-    }
-
-    internal override void ReplaceChild(Node oldChild, Node newChild)
-    {
-        if ( _elif_statement_ == oldChild )
-        {
-            SetElifStatement ((PElifStatement) newChild);
             return;
         }
     }
@@ -4780,34 +4698,46 @@ public sealed class AIfStatement : PIfStatement
     }
 
 }
-public sealed class AElifStatement : PElifStatement
+public sealed class AElseStatement : PElseStatement
 {
-    private TElif _elif_;
+    private TIf _if_;
     private TLeftParenthesis _left_parenthesis_;
     private POrExp _or_exp_;
     private TRightParenthesis _right_parenthesis_;
+    private TOpenBrace _one_;
+    private PStatements _onetwoo_;
+    private TCloseBrace _onetwo_;
+    private TElse _else_;
     private TOpenBrace _open_brace_;
     private PStatements _statements_;
     private TCloseBrace _close_brace_;
 
-    public AElifStatement ()
+    public AElseStatement ()
     {
     }
 
-    public AElifStatement (
-            TElif _elif_,
+    public AElseStatement (
+            TIf _if_,
             TLeftParenthesis _left_parenthesis_,
             POrExp _or_exp_,
             TRightParenthesis _right_parenthesis_,
+            TOpenBrace _one_,
+            PStatements _onetwoo_,
+            TCloseBrace _onetwo_,
+            TElse _else_,
             TOpenBrace _open_brace_,
             PStatements _statements_,
             TCloseBrace _close_brace_
     )
     {
-        SetElif (_elif_);
+        SetIf (_if_);
         SetLeftParenthesis (_left_parenthesis_);
         SetOrExp (_or_exp_);
         SetRightParenthesis (_right_parenthesis_);
+        SetOne (_one_);
+        SetOnetwoo (_onetwoo_);
+        SetOnetwo (_onetwo_);
+        SetElse (_else_);
         SetOpenBrace (_open_brace_);
         SetStatements (_statements_);
         SetCloseBrace (_close_brace_);
@@ -4815,11 +4745,15 @@ public sealed class AElifStatement : PElifStatement
 
     public override Object Clone()
     {
-        return new AElifStatement (
-            (TElif)CloneNode (_elif_),
+        return new AElseStatement (
+            (TIf)CloneNode (_if_),
             (TLeftParenthesis)CloneNode (_left_parenthesis_),
             (POrExp)CloneNode (_or_exp_),
             (TRightParenthesis)CloneNode (_right_parenthesis_),
+            (TOpenBrace)CloneNode (_one_),
+            (PStatements)CloneNode (_onetwoo_),
+            (TCloseBrace)CloneNode (_onetwo_),
+            (TElse)CloneNode (_else_),
             (TOpenBrace)CloneNode (_open_brace_),
             (PStatements)CloneNode (_statements_),
             (TCloseBrace)CloneNode (_close_brace_)
@@ -4828,19 +4762,19 @@ public sealed class AElifStatement : PElifStatement
 
     public override void Apply(Switch sw)
     {
-        ((Analysis) sw).CaseAElifStatement(this);
+        ((Analysis) sw).CaseAElseStatement(this);
     }
 
-    public TElif GetElif ()
+    public TIf GetIf ()
     {
-        return _elif_;
+        return _if_;
     }
 
-    public void SetElif (TElif node)
+    public void SetIf (TIf node)
     {
-        if(_elif_ != null)
+        if(_if_ != null)
         {
-            _elif_.Parent(null);
+            _if_.Parent(null);
         }
 
         if(node != null)
@@ -4853,7 +4787,7 @@ public sealed class AElifStatement : PElifStatement
             node.Parent(this);
         }
 
-        _elif_ = node;
+        _if_ = node;
     }
     public TLeftParenthesis GetLeftParenthesis ()
     {
@@ -4927,16 +4861,16 @@ public sealed class AElifStatement : PElifStatement
 
         _right_parenthesis_ = node;
     }
-    public TOpenBrace GetOpenBrace ()
+    public TOpenBrace GetOne ()
     {
-        return _open_brace_;
+        return _one_;
     }
 
-    public void SetOpenBrace (TOpenBrace node)
+    public void SetOne (TOpenBrace node)
     {
-        if(_open_brace_ != null)
+        if(_one_ != null)
         {
-            _open_brace_.Parent(null);
+            _one_.Parent(null);
         }
 
         if(node != null)
@@ -4949,18 +4883,18 @@ public sealed class AElifStatement : PElifStatement
             node.Parent(this);
         }
 
-        _open_brace_ = node;
+        _one_ = node;
     }
-    public PStatements GetStatements ()
+    public PStatements GetOnetwoo ()
     {
-        return _statements_;
+        return _onetwoo_;
     }
 
-    public void SetStatements (PStatements node)
+    public void SetOnetwoo (PStatements node)
     {
-        if(_statements_ != null)
+        if(_onetwoo_ != null)
         {
-            _statements_.Parent(null);
+            _onetwoo_.Parent(null);
         }
 
         if(node != null)
@@ -4973,18 +4907,18 @@ public sealed class AElifStatement : PElifStatement
             node.Parent(this);
         }
 
-        _statements_ = node;
+        _onetwoo_ = node;
     }
-    public TCloseBrace GetCloseBrace ()
+    public TCloseBrace GetOnetwo ()
     {
-        return _close_brace_;
+        return _onetwo_;
     }
 
-    public void SetCloseBrace (TCloseBrace node)
+    public void SetOnetwo (TCloseBrace node)
     {
-        if(_close_brace_ != null)
+        if(_onetwo_ != null)
         {
-            _close_brace_.Parent(null);
+            _onetwo_.Parent(null);
         }
 
         if(node != null)
@@ -4997,140 +4931,8 @@ public sealed class AElifStatement : PElifStatement
             node.Parent(this);
         }
 
-        _close_brace_ = node;
+        _onetwo_ = node;
     }
-
-    public override string ToString()
-    {
-        return ""
-            + ToString (_elif_)
-            + ToString (_left_parenthesis_)
-            + ToString (_or_exp_)
-            + ToString (_right_parenthesis_)
-            + ToString (_open_brace_)
-            + ToString (_statements_)
-            + ToString (_close_brace_)
-        ;
-    }
-
-    internal override void RemoveChild(Node child)
-    {
-        if ( _elif_ == child )
-        {
-            _elif_ = null;
-            return;
-        }
-        if ( _left_parenthesis_ == child )
-        {
-            _left_parenthesis_ = null;
-            return;
-        }
-        if ( _or_exp_ == child )
-        {
-            _or_exp_ = null;
-            return;
-        }
-        if ( _right_parenthesis_ == child )
-        {
-            _right_parenthesis_ = null;
-            return;
-        }
-        if ( _open_brace_ == child )
-        {
-            _open_brace_ = null;
-            return;
-        }
-        if ( _statements_ == child )
-        {
-            _statements_ = null;
-            return;
-        }
-        if ( _close_brace_ == child )
-        {
-            _close_brace_ = null;
-            return;
-        }
-    }
-
-    internal override void ReplaceChild(Node oldChild, Node newChild)
-    {
-        if ( _elif_ == oldChild )
-        {
-            SetElif ((TElif) newChild);
-            return;
-        }
-        if ( _left_parenthesis_ == oldChild )
-        {
-            SetLeftParenthesis ((TLeftParenthesis) newChild);
-            return;
-        }
-        if ( _or_exp_ == oldChild )
-        {
-            SetOrExp ((POrExp) newChild);
-            return;
-        }
-        if ( _right_parenthesis_ == oldChild )
-        {
-            SetRightParenthesis ((TRightParenthesis) newChild);
-            return;
-        }
-        if ( _open_brace_ == oldChild )
-        {
-            SetOpenBrace ((TOpenBrace) newChild);
-            return;
-        }
-        if ( _statements_ == oldChild )
-        {
-            SetStatements ((PStatements) newChild);
-            return;
-        }
-        if ( _close_brace_ == oldChild )
-        {
-            SetCloseBrace ((TCloseBrace) newChild);
-            return;
-        }
-    }
-
-}
-public sealed class AElseStatement : PElseStatement
-{
-    private TElse _else_;
-    private TOpenBrace _open_brace_;
-    private PStatements _statements_;
-    private TCloseBrace _close_brace_;
-
-    public AElseStatement ()
-    {
-    }
-
-    public AElseStatement (
-            TElse _else_,
-            TOpenBrace _open_brace_,
-            PStatements _statements_,
-            TCloseBrace _close_brace_
-    )
-    {
-        SetElse (_else_);
-        SetOpenBrace (_open_brace_);
-        SetStatements (_statements_);
-        SetCloseBrace (_close_brace_);
-    }
-
-    public override Object Clone()
-    {
-        return new AElseStatement (
-            (TElse)CloneNode (_else_),
-            (TOpenBrace)CloneNode (_open_brace_),
-            (PStatements)CloneNode (_statements_),
-            (TCloseBrace)CloneNode (_close_brace_)
-        );
-    }
-
-    public override void Apply(Switch sw)
-    {
-        ((Analysis) sw).CaseAElseStatement(this);
-    }
-
     public TElse GetElse ()
     {
         return _else_;
@@ -5231,6 +5033,13 @@ public sealed class AElseStatement : PElseStatement
     public override string ToString()
     {
         return ""
+            + ToString (_if_)
+            + ToString (_left_parenthesis_)
+            + ToString (_or_exp_)
+            + ToString (_right_parenthesis_)
+            + ToString (_one_)
+            + ToString (_onetwoo_)
+            + ToString (_onetwo_)
             + ToString (_else_)
             + ToString (_open_brace_)
             + ToString (_statements_)
@@ -5240,6 +5049,41 @@ public sealed class AElseStatement : PElseStatement
 
     internal override void RemoveChild(Node child)
     {
+        if ( _if_ == child )
+        {
+            _if_ = null;
+            return;
+        }
+        if ( _left_parenthesis_ == child )
+        {
+            _left_parenthesis_ = null;
+            return;
+        }
+        if ( _or_exp_ == child )
+        {
+            _or_exp_ = null;
+            return;
+        }
+        if ( _right_parenthesis_ == child )
+        {
+            _right_parenthesis_ = null;
+            return;
+        }
+        if ( _one_ == child )
+        {
+            _one_ = null;
+            return;
+        }
+        if ( _onetwoo_ == child )
+        {
+            _onetwoo_ = null;
+            return;
+        }
+        if ( _onetwo_ == child )
+        {
+            _onetwo_ = null;
+            return;
+        }
         if ( _else_ == child )
         {
             _else_ = null;
@@ -5264,6 +5108,41 @@ public sealed class AElseStatement : PElseStatement
 
     internal override void ReplaceChild(Node oldChild, Node newChild)
     {
+        if ( _if_ == oldChild )
+        {
+            SetIf ((TIf) newChild);
+            return;
+        }
+        if ( _left_parenthesis_ == oldChild )
+        {
+            SetLeftParenthesis ((TLeftParenthesis) newChild);
+            return;
+        }
+        if ( _or_exp_ == oldChild )
+        {
+            SetOrExp ((POrExp) newChild);
+            return;
+        }
+        if ( _right_parenthesis_ == oldChild )
+        {
+            SetRightParenthesis ((TRightParenthesis) newChild);
+            return;
+        }
+        if ( _one_ == oldChild )
+        {
+            SetOne ((TOpenBrace) newChild);
+            return;
+        }
+        if ( _onetwoo_ == oldChild )
+        {
+            SetOnetwoo ((PStatements) newChild);
+            return;
+        }
+        if ( _onetwo_ == oldChild )
+        {
+            SetOnetwo ((TCloseBrace) newChild);
+            return;
+        }
         if ( _else_ == oldChild )
         {
             SetElse ((TElse) newChild);
@@ -6069,7 +5948,6 @@ public sealed class APassAndExp : PAndExp
 }
 public sealed class ANotNotExp : PNotExp
 {
-    private PNotExp _not_exp_;
     private TNot _not_;
     private PCompExpEq _comp_exp_eq_;
 
@@ -6078,12 +5956,10 @@ public sealed class ANotNotExp : PNotExp
     }
 
     public ANotNotExp (
-            PNotExp _not_exp_,
             TNot _not_,
             PCompExpEq _comp_exp_eq_
     )
     {
-        SetNotExp (_not_exp_);
         SetNot (_not_);
         SetCompExpEq (_comp_exp_eq_);
     }
@@ -6091,7 +5967,6 @@ public sealed class ANotNotExp : PNotExp
     public override Object Clone()
     {
         return new ANotNotExp (
-            (PNotExp)CloneNode (_not_exp_),
             (TNot)CloneNode (_not_),
             (PCompExpEq)CloneNode (_comp_exp_eq_)
         );
@@ -6102,30 +5977,6 @@ public sealed class ANotNotExp : PNotExp
         ((Analysis) sw).CaseANotNotExp(this);
     }
 
-    public PNotExp GetNotExp ()
-    {
-        return _not_exp_;
-    }
-
-    public void SetNotExp (PNotExp node)
-    {
-        if(_not_exp_ != null)
-        {
-            _not_exp_.Parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.Parent() != null)
-            {
-                node.Parent().RemoveChild(node);
-            }
-
-            node.Parent(this);
-        }
-
-        _not_exp_ = node;
-    }
     public TNot GetNot ()
     {
         return _not_;
@@ -6178,7 +6029,6 @@ public sealed class ANotNotExp : PNotExp
     public override string ToString()
     {
         return ""
-            + ToString (_not_exp_)
             + ToString (_not_)
             + ToString (_comp_exp_eq_)
         ;
@@ -6186,11 +6036,6 @@ public sealed class ANotNotExp : PNotExp
 
     internal override void RemoveChild(Node child)
     {
-        if ( _not_exp_ == child )
-        {
-            _not_exp_ = null;
-            return;
-        }
         if ( _not_ == child )
         {
             _not_ = null;
@@ -6205,11 +6050,6 @@ public sealed class ANotNotExp : PNotExp
 
     internal override void ReplaceChild(Node oldChild, Node newChild)
     {
-        if ( _not_exp_ == oldChild )
-        {
-            SetNotExp ((PNotExp) newChild);
-            return;
-        }
         if ( _not_ == oldChild )
         {
             SetNot ((TNot) newChild);

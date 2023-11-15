@@ -1,17 +1,24 @@
-const int a = 5;
-
-foo(int x, int y, int z):int {
-	int w;
+foo(int x, int y):int {
+	if (not (x != 3)){
+		y = x;
+	}
+	if (not (x == 3)){
+		y = x;
+	}
+	else{
+		y = x;
+	}
+	if (not (x <= 3)){
+		y = x;
+	}
+	if (not (x > 3)){
+		y = x;
+	}
+	if (not (x < 3)){
+		y = x;
+	}
 }
 
 main(){
-	int x;
-	int y;
 	int z;
-	x = 5;
-	y = 2;
-	z = 6;
-	a = 5;
-	string xyz = "xyz";
-	foo(x, y, xyz);
 }
