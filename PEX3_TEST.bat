@@ -35,6 +35,22 @@ echo Testing Bad Arithmetic>> %file%
 bin\Debug\ConsoleApplication.exe testcases\pex3\arithmetic_incorrect.txt >> %file%
 echo. >> %file%
 
+echo Testing Bad Comparison>> %file%
+bin\Debug\ConsoleApplication.exe testcases\pex3\comparison_incorrect.txt >> %file%
+echo. >> %file%
+
+echo Testing Bad Assignment>> %file%
+bin\Debug\ConsoleApplication.exe testcases\pex3\assignment_incorrect.txt >> %file%
+echo. >> %file%
+
+echo Testing Bad Method Declaration>> %file%
+bin\Debug\ConsoleApplication.exe testcases\pex3\method_declare_incorrect.txt >> %file%
+echo. >> %file%
+
+echo Testing Bad Method Calls>> %file%
+bin\Debug\ConsoleApplication.exe testcases\pex3\method_call_incorrect.txt >> %file%
+echo. >> %file%
+
 
 :: ----------------------------------------
 :: GOOD EXAMPLES
@@ -61,5 +77,20 @@ echo Testing Good Arithmetic>> %file%
 bin\Debug\ConsoleApplication.exe testcases\pex3\arithmetic_correct.txt >> %file%
 echo. >> %file%
 
+echo Testing Good Comparison>> %file%
+bin\Debug\ConsoleApplication.exe testcases\pex3\comparison_correct.txt >> %file%
+echo. >> %file%
+
+echo Testing Good Assignment>> %file%
+bin\Debug\ConsoleApplication.exe testcases\pex3\assignment_correct.txt >> %file%
+echo. >> %file%
+
+echo Testing Good Method Declaration>> %file%
+bin\Debug\ConsoleApplication.exe testcases\pex3\method_declare_correct.txt >> %file%
+echo. >> %file%
+
+echo Testing Good Method Calls>> %file%
+bin\Debug\ConsoleApplication.exe testcases\pex3\method_call_correct.txt >> %file%
+echo. >> %file%
 
 pause
