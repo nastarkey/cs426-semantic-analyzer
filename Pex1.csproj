@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="analysis.cs" />
+    <Compile Include="CodeGenerator.cs" />
     <Compile Include="Definition.cs" />
     <Compile Include="lexer.cs" />
     <Compile Include="nodes.cs" />
@@ -100,6 +101,7 @@
     <Content Include="testcases\pex2\main_correct.txt" />
     <Content Include="testcases\pex3\test2.txt" />
     <Content Include="testcases\pex3\test.txt" />
+    <Content Include="testcases\pex4\test.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".vs\PEX Starter Pack\FileContentIndex\10f8b610-db3d-43f8-ac59-1fc46e0d4430.vsidx" />
@@ -118,9 +120,7 @@
     <None Include="README.parser" />
     <None Include="PEX1_TEST.bat" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="testcases\pex4\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>
     <VisualStudio AllowExistingFolder="true" />

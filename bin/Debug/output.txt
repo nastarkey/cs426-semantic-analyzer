@@ -1,0 +1,11 @@
+.assembly extern mscorlib {}
+.assembly funprogram
+{
+	.ver 1:0:1:0
+}
+.method static void main() cil managed
+{
+	.maxstack 128
+	.entrypoint
+	ret
+}

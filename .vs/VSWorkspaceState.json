@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\testcases",
+    "\\testcases\\pex3"
   ],
-  "SelectedNode": "\\Pex1.sln",
+  "SelectedNode": "\\SemanticAnalyzer.cs",
   "PreviewInSolutionExplorer": false
 }

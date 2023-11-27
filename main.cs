@@ -133,8 +133,11 @@ class TestParser
             Parser p = new Parser(l);
             Start s = p.Parse();
 
-            SemanticAnalyzer sa = new SemanticAnalyzer();
-            s.Apply(sa);
+            //SemanticAnalyzer sa = new SemanticAnalyzer();
+            //s.Apply(sa);
+
+            CodeGenerator cg = new CodeGenerator("output.txt");
+            s.Apply(cg);
 
             TextPrinter printer = new TextPrinter();
             if (args.Length > 0 && args[0] == "-ansi")

@@ -929,7 +929,6 @@ namespace CS426.analysis
             if (DecoratedParseTree.TryGetValue(node.GetOrExp(), out tempDef))
             {
                 tempParams.Add(tempDef);
-
                 
             }
         }
