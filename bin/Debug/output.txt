@@ -7,5 +7,11 @@
 {
 	.maxstack 128
 	.entrypoint
+
+	// Main Code Goes Here
+	// Declaring Variable x 
+	.locals init(int32 x)
+
 	ret
 }
+

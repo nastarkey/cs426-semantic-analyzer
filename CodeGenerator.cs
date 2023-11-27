@@ -12,6 +12,8 @@ namespace CS426.analysis
     {
         StreamWriter _output;
 
+        private int labelID = 0;
+
         public CodeGenerator( String outputFileName )
         {
             _output = new StreamWriter( outputFileName );
@@ -39,18 +41,38 @@ namespace CS426.analysis
         public override void OutAProgram(AProgram node)
         {
             _output.Close();
+            Console.WriteLine("\n\n");
         }
 
         public override void InANoParamMainFunctionCall(ANoParamMainFunctionCall node)
         {
             WriteLine(".method static void main() cil managed");
             WriteLine("{\n\t.maxstack 128");
-            WriteLine("\t.entrypoint");
+            WriteLine("\t.entrypoint\n");
+            WriteLine("\t// Main Code Goes Here");
         }
 
         public override void OutANoParamMainFunctionCall(ANoParamMainFunctionCall node)
         {
-            WriteLine("\tret\n}");
+            WriteLine("\tret\n}\n");
+        }
+
+        public override void OutANoAssignDeclareStatement(ANoAssignDeclareStatement node)
+        {
+            WriteLine("\t// Declaring Variable " + node.GetVarname().ToString());
+            Write("\t.locals init(");
+
+            if(node.GetType().Text == "int")
+            {
+                Write("int32 ");
+            } else if ( node.GetType().Text == "double") 
+            {
+                Write("float32 ");
+            } else
+            {
+                Write(node.GetType().Text + " ");
+            }
+            WriteLine(node.GetVarname().Text + ")\n");
         }
     }
 }
