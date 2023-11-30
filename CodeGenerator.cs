@@ -74,5 +74,82 @@ namespace CS426.analysis
             }
             WriteLine(node.GetVarname().Text + ")\n");
         }
+
+        public override void OutAIntOperand(AIntOperand node)
+        {
+            WriteLine("\tldc.i4 " + node.GetInteger().Text);
+        }
+
+        public override void OutAStringOperand(AStringOperand node)
+        {
+            WriteLine("\tldstr " + node.GetString().Text);
+        }
+
+        public override void OutADoubleOperand(ADoubleOperand node)
+        {
+            WriteLine("\tldc.r8 " + node.GetDouble().Text);
+        }
+
+        public override void OutAVariableOperand(AVariableOperand node)
+        {
+            WriteLine("\tldloc " + node.GetId().Text);
+        }
+
+        public override void OutAValueAssignStatement(AValueAssignStatement node)
+        {
+            WriteLine("\tstloc " + node.GetId().Text + "\n");
+        }
+
+        public override void OutAAddExp0(AAddExp0 node)
+        {
+            WriteLine("\tadd");
+        }
+
+        public override void OutASubExp0(ASubExp0 node)
+        {
+            WriteLine("\tsub");
+        }
+
+        public override void OutAMultiplyExp1(AMultiplyExp1 node)
+        {
+            WriteLine("\tmul");
+        }
+
+        public override void OutADivideExp1(ADivideExp1 node)
+        {
+            WriteLine("\tdiv");
+        }
+
+        public override void OutANegativeExp2(ANegativeExp2 node)
+        {
+            WriteLine("\tneg");
+        }
+
+        public override void OutAFunctionCallStatement(AFunctionCallStatement node)
+        {
+            if (node.GetFuncname().Text == "printInt")
+            {
+                WriteLine("\tcall void [mscorlib]System.Console::Write(int32)");
+            }
+            else if (node.GetFuncname().Text == "printDouble")
+            {
+                WriteLine("\tcall void [mscorlib]System.Console::Write(float32)");
+            }
+            else if (node.GetFuncname().Text == "printString")
+            {
+                WriteLine("\tcall void [mscorlib]System.Console::Write(string)");
+            }
+            else if (node.GetFuncname().Text == "printLine")
+            {
+                WriteLine("\tldstr \"\\n\"");
+                WriteLine("\tcall void [mscorlib]System.Console::Write(string)");
+            }
+            else
+            {
+                WriteLine("\tcall void " + node.GetFuncname().Text + "()");
+            }
+        }
+
+
     }
 }
