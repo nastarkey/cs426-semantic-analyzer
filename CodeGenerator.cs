@@ -44,6 +44,20 @@ namespace CS426.analysis
             Console.WriteLine("\n\n");
         }
 
+        public override void InAWithoutPromiseFunctionDeclarationStatement(AWithoutPromiseFunctionDeclarationStatement node)
+        {
+            WriteLine(".method static void " + node.GetFuncname().Text + "() cil managed");
+            WriteLine("{\n\t.maxstack 128");
+            WriteLine("\t.entrypoint\n");
+            WriteLine("\t// Function Code Goes Here");
+        }
+
+        public override void OutAWithoutPromiseFunctionDeclarationStatement(AWithoutPromiseFunctionDeclarationStatement node)
+        {
+            WriteLine("\tret\n}\n");
+        }
+
+
         public override void InANoParamMainFunctionCall(ANoParamMainFunctionCall node)
         {
             WriteLine(".method static void main() cil managed");
@@ -150,6 +164,22 @@ namespace CS426.analysis
             }
         }
 
+        public override void OutANotNotExp(ANotNotExp node)
+        {
+            WriteLine("\tldc.i4 0");
+            WriteLine("\tceq");
+        }
 
+        public override void OutAAndAndExp(AAndAndExp node)
+        {
+            WriteLine("\tand");
+        }
+
+        public override void OutAOrOrExp(AOrOrExp node)
+        {
+            WriteLine("\tor");
+        }
+
+        //need to do comparisons now
     }
 }
