@@ -14,6 +14,11 @@ namespace CS426.analysis
 
         private int labelID = 0;
 
+        private int GetNextLabelId()
+        {
+            return labelID++;
+        }
+
         public CodeGenerator( String outputFileName )
         {
             _output = new StreamWriter( outputFileName );
