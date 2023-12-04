@@ -14,9 +14,11 @@ namespace CS426.analysis
 
         private int labelID = 0;
 
-        private int GetNextLabelId()
+        private string GetNextLabelId()
         {
-            return labelID++;
+            string label = "label" + labelID.ToString();
+            labelID++;
+            return label;
         }
 
         public CodeGenerator( String outputFileName )
@@ -61,7 +63,6 @@ namespace CS426.analysis
         {
             WriteLine("\tret\n}\n");
         }
-
 
         public override void InANoParamMainFunctionCall(ANoParamMainFunctionCall node)
         {
@@ -186,5 +187,17 @@ namespace CS426.analysis
         }
 
         //need to do comparisons now
+        public override void CaseAIfStatement(AIfStatement node)
+        {
+            string labelTrue = GetNextLabelId();
+            string labelFalse = GetNextLabelId();
+            string labelCont = GetNextLabelId();
+
+            InAIfStatement(node);
+            if (node.GetStatements() != null)
+            {
+                WriteLine("\tbrtrue " + labelTrue);
+            }
+        }
     }
 }

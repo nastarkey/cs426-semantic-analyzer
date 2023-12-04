@@ -136,7 +136,7 @@ class TestParser
             //SemanticAnalyzer sa = new SemanticAnalyzer();
             //s.Apply(sa);
 
-            CodeGenerator cg = new CodeGenerator("output.txt");
+            CodeGenerator cg = new CodeGenerator("output.il");
             s.Apply(cg);
 
             TextPrinter printer = new TextPrinter();

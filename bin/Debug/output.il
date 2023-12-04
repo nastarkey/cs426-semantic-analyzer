@@ -15,6 +15,10 @@
 	ldc.i4 5
 	stloc x
 
+	ldloc x
+	ldc.i4 7
+	add
+	call void [mscorlib]System.Console::Write(int32)
 	ret
 }
 

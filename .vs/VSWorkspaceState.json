@@ -1,9 +1,11 @@
 {
   "ExpandedNodes": [
     "",
+    "\\bin",
+    "\\bin\\Debug",
     "\\testcases",
-    "\\testcases\\pex3",
     "\\testcases\\pex4"
   ],
+  "SelectedNode": "\\CodeGenerator.cs",
   "PreviewInSolutionExplorer": false
 }
