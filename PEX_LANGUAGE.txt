@@ -51,7 +51,7 @@ Tokens
 	id = letter* ('_'? (letter)) (whole | letter)*;
 	
 	//Comments
-	comment = '/w' ([[0..0xffff] - [10+13]])*;
+	comment = '//' ([[0..0xffff] - [10+13]])*;
 	
 	//Literals
 	double = (whole+ '.' whole+) | (whole+ '.' whole+) ('e' | 'E') '-'? whole+;
@@ -85,17 +85,17 @@ Productions
 	main_function_call = main left_parenthesis formal_parameters right_parenthesis open_brace statements close_brace
 	| {no_param} main left_parenthesis right_parenthesis open_brace statements close_brace;
 
-	function_declaration_statement = {with_promise} [funcname]:id left_parenthesis formal_parameters right_parenthesis promise [type]:id open_brace statements close_brace
-	| {without_promise} [funcname]:id left_parenthesis formal_parameters right_parenthesis open_brace statements close_brace;
+	function_declaration_statement = {with_promise} [funcname]:id left_parenthesis formal_parameters? right_parenthesis promise [type]:id open_brace statements close_brace
+	| {without_promise} [funcname]:id left_parenthesis formal_parameters? right_parenthesis open_brace statements close_brace;
 
-	function_call_statement = [funcname]:id left_parenthesis parameters right_parenthesis eol;
+	function_call_statement = [funcname]:id left_parenthesis parameters? right_parenthesis eol;
 	formal_parameters = {single_param} [type]:id [param]:id | {multiple_params} [type]:id [param]:id comma formal_parameters;
 	parameters = {single_param} or_exp | {multiple_params} or_exp comma parameters;
 
 	assign_statement = {value} id assign or_exp eol | {function} id assign function_call_statement;
 
 	if_statement = if left_parenthesis or_exp right_parenthesis open_brace statements close_brace;
-	else_statement = if left_parenthesis or_exp right_parenthesis [one]:open_brace [onetwoo]:statements [onetwo]:close_brace else open_brace statements close_brace;
+	else_statement = if left_parenthesis or_exp right_parenthesis [one]:open_brace [true]:statements [onetwo]:close_brace else open_brace [false]:statements close_brace;
 	while_statement = while left_parenthesis or_exp right_parenthesis open_brace statements close_brace;
 
 

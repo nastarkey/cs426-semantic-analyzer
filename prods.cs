@@ -4705,11 +4705,11 @@ public sealed class AElseStatement : PElseStatement
     private POrExp _or_exp_;
     private TRightParenthesis _right_parenthesis_;
     private TOpenBrace _one_;
-    private PStatements _onetwoo_;
+    private PStatements _true_;
     private TCloseBrace _onetwo_;
     private TElse _else_;
     private TOpenBrace _open_brace_;
-    private PStatements _statements_;
+    private PStatements _false_;
     private TCloseBrace _close_brace_;
 
     public AElseStatement ()
@@ -4722,11 +4722,11 @@ public sealed class AElseStatement : PElseStatement
             POrExp _or_exp_,
             TRightParenthesis _right_parenthesis_,
             TOpenBrace _one_,
-            PStatements _onetwoo_,
+            PStatements _true_,
             TCloseBrace _onetwo_,
             TElse _else_,
             TOpenBrace _open_brace_,
-            PStatements _statements_,
+            PStatements _false_,
             TCloseBrace _close_brace_
     )
     {
@@ -4735,11 +4735,11 @@ public sealed class AElseStatement : PElseStatement
         SetOrExp (_or_exp_);
         SetRightParenthesis (_right_parenthesis_);
         SetOne (_one_);
-        SetOnetwoo (_onetwoo_);
+        SetTrue (_true_);
         SetOnetwo (_onetwo_);
         SetElse (_else_);
         SetOpenBrace (_open_brace_);
-        SetStatements (_statements_);
+        SetFalse (_false_);
         SetCloseBrace (_close_brace_);
     }
 
@@ -4751,11 +4751,11 @@ public sealed class AElseStatement : PElseStatement
             (POrExp)CloneNode (_or_exp_),
             (TRightParenthesis)CloneNode (_right_parenthesis_),
             (TOpenBrace)CloneNode (_one_),
-            (PStatements)CloneNode (_onetwoo_),
+            (PStatements)CloneNode (_true_),
             (TCloseBrace)CloneNode (_onetwo_),
             (TElse)CloneNode (_else_),
             (TOpenBrace)CloneNode (_open_brace_),
-            (PStatements)CloneNode (_statements_),
+            (PStatements)CloneNode (_false_),
             (TCloseBrace)CloneNode (_close_brace_)
         );
     }
@@ -4885,16 +4885,16 @@ public sealed class AElseStatement : PElseStatement
 
         _one_ = node;
     }
-    public PStatements GetOnetwoo ()
+    public PStatements GetTrue ()
     {
-        return _onetwoo_;
+        return _true_;
     }
 
-    public void SetOnetwoo (PStatements node)
+    public void SetTrue (PStatements node)
     {
-        if(_onetwoo_ != null)
+        if(_true_ != null)
         {
-            _onetwoo_.Parent(null);
+            _true_.Parent(null);
         }
 
         if(node != null)
@@ -4907,7 +4907,7 @@ public sealed class AElseStatement : PElseStatement
             node.Parent(this);
         }
 
-        _onetwoo_ = node;
+        _true_ = node;
     }
     public TCloseBrace GetOnetwo ()
     {
@@ -4981,16 +4981,16 @@ public sealed class AElseStatement : PElseStatement
 
         _open_brace_ = node;
     }
-    public PStatements GetStatements ()
+    public PStatements GetFalse ()
     {
-        return _statements_;
+        return _false_;
     }
 
-    public void SetStatements (PStatements node)
+    public void SetFalse (PStatements node)
     {
-        if(_statements_ != null)
+        if(_false_ != null)
         {
-            _statements_.Parent(null);
+            _false_.Parent(null);
         }
 
         if(node != null)
@@ -5003,7 +5003,7 @@ public sealed class AElseStatement : PElseStatement
             node.Parent(this);
         }
 
-        _statements_ = node;
+        _false_ = node;
     }
     public TCloseBrace GetCloseBrace ()
     {
@@ -5038,11 +5038,11 @@ public sealed class AElseStatement : PElseStatement
             + ToString (_or_exp_)
             + ToString (_right_parenthesis_)
             + ToString (_one_)
-            + ToString (_onetwoo_)
+            + ToString (_true_)
             + ToString (_onetwo_)
             + ToString (_else_)
             + ToString (_open_brace_)
-            + ToString (_statements_)
+            + ToString (_false_)
             + ToString (_close_brace_)
         ;
     }
@@ -5074,9 +5074,9 @@ public sealed class AElseStatement : PElseStatement
             _one_ = null;
             return;
         }
-        if ( _onetwoo_ == child )
+        if ( _true_ == child )
         {
-            _onetwoo_ = null;
+            _true_ = null;
             return;
         }
         if ( _onetwo_ == child )
@@ -5094,9 +5094,9 @@ public sealed class AElseStatement : PElseStatement
             _open_brace_ = null;
             return;
         }
-        if ( _statements_ == child )
+        if ( _false_ == child )
         {
-            _statements_ = null;
+            _false_ = null;
             return;
         }
         if ( _close_brace_ == child )
@@ -5133,9 +5133,9 @@ public sealed class AElseStatement : PElseStatement
             SetOne ((TOpenBrace) newChild);
             return;
         }
-        if ( _onetwoo_ == oldChild )
+        if ( _true_ == oldChild )
         {
-            SetOnetwoo ((PStatements) newChild);
+            SetTrue ((PStatements) newChild);
             return;
         }
         if ( _onetwo_ == oldChild )
@@ -5153,9 +5153,9 @@ public sealed class AElseStatement : PElseStatement
             SetOpenBrace ((TOpenBrace) newChild);
             return;
         }
-        if ( _statements_ == oldChild )
+        if ( _false_ == oldChild )
         {
-            SetStatements ((PStatements) newChild);
+            SetFalse ((PStatements) newChild);
             return;
         }
         if ( _close_brace_ == oldChild )

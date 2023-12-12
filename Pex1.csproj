@@ -49,10 +49,10 @@
     <Compile Include="CodeGenerator.cs" />
     <Compile Include="Definition.cs" />
     <Compile Include="lexer.cs" />
+    <Compile Include="main.cs" />
     <Compile Include="nodes.cs" />
     <Compile Include="parser.cs" />
     <Compile Include="prods.cs" />
-    <Compile Include="main.cs" />
     <Compile Include="SemanticAnalyzer.cs" />
     <Compile Include="tokens.cs" />
   </ItemGroup>
@@ -101,6 +101,7 @@
     <Content Include="testcases\pex2\main_correct.txt" />
     <Content Include="testcases\pex3\test2.txt" />
     <Content Include="testcases\pex3\test.txt" />
+    <Content Include="testcases\pex4\final_test_code.txt" />
     <Content Include="testcases\pex4\test.txt" />
   </ItemGroup>
   <ItemGroup>

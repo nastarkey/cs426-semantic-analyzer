@@ -55,7 +55,7 @@ namespace CS426.analysis
         {
             WriteLine(".method static void " + node.GetFuncname().Text + "() cil managed");
             WriteLine("{\n\t.maxstack 128");
-            WriteLine("\t.entrypoint\n");
+   
             WriteLine("\t// Function Code Goes Here");
         }
 
@@ -190,14 +190,218 @@ namespace CS426.analysis
         public override void CaseAIfStatement(AIfStatement node)
         {
             string labelTrue = GetNextLabelId();
-            string labelFalse = GetNextLabelId();
             string labelCont = GetNextLabelId();
-
+    
             InAIfStatement(node);
+            if (node.GetIf() != null)
+            {
+                node.GetIf().Apply(this);
+            }
+            if (node.GetLeftParenthesis() != null)
+            {
+                node.GetLeftParenthesis().Apply(this);
+            }
+            if (node.GetOrExp() != null)
+            {
+                node.GetOrExp().Apply(this);
+            }
+            if (node.GetRightParenthesis() != null)
+            {
+                node.GetRightParenthesis().Apply(this);
+            }
+            if (node.GetOpenBrace() != null)
+            {
+                node.GetOpenBrace().Apply(this);
+            }
             if (node.GetStatements() != null)
             {
                 WriteLine("\tbrtrue " + labelTrue);
+                WriteLine("\tbr " + labelCont);
+                WriteLine(labelTrue + ":");
+                node.GetStatements().Apply(this);
             }
+            if (node.GetCloseBrace() != null)
+            {
+                node.GetCloseBrace().Apply(this);
+            }
+            WriteLine(labelCont + ":");
+            OutAIfStatement(node);           
         }
+
+
+        public override void CaseAElseStatement(AElseStatement node)
+        {
+            string labelTrue = GetNextLabelId();
+            string labelFalse = GetNextLabelId();
+            string labelCont = GetNextLabelId();
+
+            InAElseStatement(node);
+            if (node.GetIf() != null)
+            {
+                node.GetIf().Apply(this);
+            }
+            if (node.GetLeftParenthesis() != null)
+            {
+                node.GetLeftParenthesis().Apply(this);
+            }
+            if (node.GetOrExp() != null)
+            {
+                node.GetOrExp().Apply(this);
+            }
+            if (node.GetRightParenthesis() != null)
+            {
+                node.GetRightParenthesis().Apply(this);
+            }
+            if (node.GetOne() != null)
+            {
+                node.GetOne().Apply(this);
+            }
+            if (node.GetTrue() != null)
+            {
+                WriteLine("\tbrtrue " + labelTrue);
+                WriteLine("\tbr " + labelFalse);
+                WriteLine(labelTrue + ":");
+                node.GetTrue().Apply(this);
+            }
+            if (node.GetOnetwo() != null)
+            {
+                node.GetOnetwo().Apply(this);
+            }
+            if (node.GetElse() != null)
+            {
+                node.GetElse().Apply(this);
+            }
+            if (node.GetOpenBrace() != null)
+            {
+                node.GetOpenBrace().Apply(this);
+            }
+            if (node.GetFalse() != null)
+            {
+                WriteLine("br " + labelCont);
+                WriteLine(labelFalse + ":");
+                node.GetFalse().Apply(this);
+            }
+            if (node.GetCloseBrace() != null)
+            {
+                node.GetCloseBrace().Apply(this);
+            }
+            WriteLine(labelCont + ":");
+            OutAElseStatement(node);
+        }
+
+        public override void CaseAWhileStatement(AWhileStatement node)
+        {
+            string labelTrue = GetNextLabelId();
+            string labelFalse = GetNextLabelId();
+
+            InAWhileStatement(node);
+            if (node.GetWhile() != null)
+            {
+                node.GetWhile().Apply(this);
+            }
+            if (node.GetLeftParenthesis() != null)
+            {
+                node.GetLeftParenthesis().Apply(this);
+            }
+            if (node.GetOrExp() != null)
+            {
+                WriteLine(labelTrue + ":");
+                node.GetOrExp().Apply(this);
+            }
+            if (node.GetRightParenthesis() != null)
+            {
+                node.GetRightParenthesis().Apply(this);
+            }
+            if (node.GetOpenBrace() != null)
+            {
+                node.GetOpenBrace().Apply(this);
+            }
+            if (node.GetStatements() != null)
+            {
+                WriteLine("\tbrfalse " + labelFalse);
+                node.GetStatements().Apply(this);
+                WriteLine("br " + labelTrue);
+            }
+            if (node.GetCloseBrace() != null)
+            {
+                node.GetCloseBrace().Apply(this);
+            }
+            WriteLine(labelFalse + ":");
+            OutAWhileStatement(node);
+        }
+
+        public override void OutAEqCompExpEq(AEqCompExpEq node)
+        {
+            string lableTrue = GetNextLabelId();
+            string lableFalse = GetNextLabelId();
+            WriteLine("\tbeq " + lableTrue);
+            WriteLine("\tldc.i4 0");
+            WriteLine("\tbr " + lableFalse);
+            WriteLine(lableTrue + ":");
+            WriteLine("\tldc.i4 1");
+            WriteLine(lableFalse + ":");
+
+        }
+
+        public override void OutALtCompExpLtgt(ALtCompExpLtgt node)
+        {
+            string lableTrue = GetNextLabelId();
+            string lableFalse = GetNextLabelId();
+            WriteLine("\tblt " + lableTrue);
+            WriteLine("\tldc.i4 0");
+            WriteLine("\tbr " + lableFalse);
+            WriteLine(lableTrue + ":");
+            WriteLine("\tldc.i4 1");
+            WriteLine(lableFalse + ":");
+        }
+
+        public override void OutAGtCompExpLtgt(AGtCompExpLtgt node)
+        {
+            string lableTrue = GetNextLabelId();
+            string lableFalse = GetNextLabelId();
+            WriteLine("\tbgt " + lableTrue);
+            WriteLine("\tldc.i4 0");
+            WriteLine("\tbr " + lableFalse);
+            WriteLine(lableTrue + ":");
+            WriteLine("\tldc.i4 1");
+            WriteLine(lableFalse + ":");
+        }
+
+        public override void OutAGteCompExpLtgt(AGteCompExpLtgt node)
+        {
+            string lableTrue = GetNextLabelId();
+            string lableFalse = GetNextLabelId();
+            WriteLine("\tbge " + lableTrue);
+            WriteLine("\tldc.i4 0");
+            WriteLine("\tbr " + lableFalse);
+            WriteLine(lableTrue + ":");
+            WriteLine("\tldc.i4 1");
+            WriteLine(lableFalse + ":");
+        }
+
+        public override void OutALteCompExpLtgt(ALteCompExpLtgt node)
+        {
+            string lableTrue = GetNextLabelId();
+            string lableFalse = GetNextLabelId();
+            WriteLine("\tble " + lableTrue);
+            WriteLine("\tldc.i4 0");
+            WriteLine("\tbr " + lableFalse);
+            WriteLine(lableTrue + ":");
+            WriteLine("\tldc.i4 1");
+            WriteLine(lableFalse + ":");
+        }
+
+        public override void OutANeqCompExpEq(ANeqCompExpEq node)
+        {
+            string lableTrue = GetNextLabelId();
+            string lableFalse = GetNextLabelId();
+            WriteLine("\tbne.un " + lableTrue);
+            WriteLine("\tldc.i4 0");
+            WriteLine("\tbr " + lableFalse);
+            WriteLine(lableTrue + ":");
+            WriteLine("\tldc.i4 1");
+            WriteLine(lableFalse + ":");
+        }
+
     }
 }
